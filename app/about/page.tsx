@@ -26,11 +26,11 @@ export default function About() {
                 Why I Want to Do This
               </h2>
               <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                Technology has the power to transform lives and break down barriers that limit human potential. When I learned that nearly half of all visually impaired individuals experience falls each year—often resulting in serious injuries and loss of independence—I knew I had to act. This project represents more than just an engineering challenge; it's an opportunity to create meaningful impact in people's daily lives.
+                Technology has the power to transform lives and break down barriers that limit human potential. When I learned that nearly half of all visually impaired individuals experience falls each year—often resulting in serious injuries and loss of independence—I knew I had to act. This project represents more than just an engineering challenge; it&apos;s an opportunity to create meaningful impact in people&apos;s daily lives.
 
-                My passion for building solutions that matter drives me to push the boundaries of what's possible. By combining cutting-edge sensor technology, computer vision, and intuitive user experience design, I believe we can create a system that not only prevents injuries but also restores confidence and autonomy to those who need it most. Every line of code, every design decision, and every iteration brings us closer to a world where visual impairment doesn't mean limited mobility or constant fear of injury.
+                My passion for building solutions that matter drives me to push the boundaries of what&apos;s possible. By combining cutting-edge sensor technology, computer vision, and intuitive user experience design, I believe we can create a system that not only prevents injuries but also restores confidence and autonomy to those who need it most. Every line of code, every design decision, and every iteration brings us closer to a world where visual impairment doesn&apos;t mean limited mobility or constant fear of injury.
 
-                This project is my commitment to using engineering skills for social good—to build something that truly makes a difference in people's lives.
+                This project is my commitment to using engineering skills for social good—to build something that truly makes a difference in people&apos;s lives.
               </p>
             </div>
 

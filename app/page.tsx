@@ -44,7 +44,7 @@ export default function Home() {
                 Problem Statement
               </h2>
               <p className="text-gray-300 leading-relaxed mb-4">
-                Visually impaired people face a high risk of serious injury from falls during daily mobility in various indoor and outdoor environments. This is primarily because current aids like canes don't reliably detect or warn users about steep drop-offs or overhanging obstacles. With 46.7% of visually impaired individuals reporting a fall each year, leading to injury and loss of independence, a more reliable solution is urgently needed to ensure their safety and mobility.
+                Visually impaired people face a high risk of serious injury from falls during daily mobility in various indoor and outdoor environments. This is primarily because current aids like canes don&apos;t reliably detect or warn users about steep drop-offs or overhanging obstacles. With 46.7% of visually impaired individuals reporting a fall each year, leading to injury and loss of independence, a more reliable solution is urgently needed to ensure their safety and mobility.
               </p>
               <p className="text-gray-400 leading-relaxed">
                 The Advanced Multi-Sensing Mobility System addresses this critical challenge through innovative smart glasses technology. By integrating advanced sensors, real-time processing, and intuitive haptic feedback, this system provides comprehensive environmental awareness that goes far beyond traditional mobility aids. The solution combines computer vision, depth sensing, and obstacle detection to create a reliable safety net that empowers visually impaired individuals to navigate their world with confidence and independence.
