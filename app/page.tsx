@@ -50,12 +50,34 @@ export default function Home() {
                 The Advanced Multi-Sensing Mobility System addresses this critical challenge through innovative smart glasses technology. By integrating advanced sensors, real-time processing, and intuitive haptic feedback, this system provides comprehensive environmental awareness that goes far beyond traditional mobility aids. The solution combines computer vision, depth sensing, and obstacle detection to create a reliable safety net that empowers visually impaired individuals to navigate their world with confidence and independence.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Existing Solutions Analysis
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Analysis of existing patents and products reveals significant gaps in addressing steep drop-offs and overhanging obstacles. While solutions like WeWalk Smart Cane and Ray Electronic Mobility Aid address overhead obstacles, reliable drop-off detection remains a primary technical challenge. Most feature-heavy solutions (smart glasses, intelligent canes) are expensive ($500+) and face adoption barriers due to complexity, weight, or battery dependence.
+              </p>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Key findings from the evaluation include:
+              </p>
+              <ul className="text-gray-400 leading-relaxed list-disc list-inside space-y-2 mb-4">
+                <li>Drop-off detection is a primary technical challenge that most solutions struggle with</li>
+                <li>Haptic/vibrational feedback is the dominant modality for non-intrusive spatial awareness</li>
+                <li>There&apos;s a critical trade-off between features, cost, and usability</li>
+                <li>Prototype solutions like the Sensory Substitution Glove show promise but need more testing</li>
+              </ul>
+              <p className="text-gray-400 leading-relaxed">
+                The most practical solutions augment the traditional cane or use low-cost wearable form factors, suggesting that an effective new solution should balance comprehensive hazard detection with cost-effectiveness and intuitive user experience.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
           >
             <Link href="/problem-statement">
               <motion.button
@@ -64,6 +86,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 Explore Problem Statement
+              </motion.button>
+            </Link>
+            <Link href="/patents-products">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                View Patents & Products
               </motion.button>
             </Link>
           </motion.div>
