@@ -71,6 +71,29 @@ export default function Home() {
                 The most practical solutions augment the traditional cane or use low-cost wearable form factors, suggesting that an effective new solution should balance comprehensive hazard detection with cost-effectiveness and intuitive user experience.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Solution Requirements
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Based on feedback from experts, stakeholders (visually impaired individuals, caretakers, and ADA legislators), and comprehensive research of existing devices, the solution requirements have been carefully defined across three critical categories: User Safety and Navigation, Ergonomics and Durability, and Advanced Features.
+              </p>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Key requirements include:
+              </p>
+              <ul className="text-gray-400 leading-relaxed list-disc list-inside space-y-2 mb-4">
+                <li>Accurate obstacle detection within 4-meter range with ≥98% accuracy in various weather and lighting conditions</li>
+                <li>Reliable drop-off detection for height changes ≥15cm at least 1 meter in advance</li>
+                <li>Weight not exceeding 120% of standard white cane (350-450g) to prevent user fatigue</li>
+                <li>IP67 water resistance and 16-hour minimum battery life for daily reliability</li>
+                <li>Compliance with IEC 60601-1 medical safety standards and FCC/CE electromagnetic compatibility</li>
+                <li>Integrated multi-sensor approach (LiDAR, ultrasonic, camera, IMU/GPS) for comprehensive environmental awareness</li>
+              </ul>
+              <p className="text-gray-400 leading-relaxed">
+                These specifications ensure the solution addresses the core safety challenges while maintaining user-centric design, regulatory compliance, and long-term durability essential for a primary mobility aid.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -95,6 +118,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 View Patents & Products
+              </motion.button>
+            </Link>
+            <Link href="/solution-requirements">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                View Solution Requirements
               </motion.button>
             </Link>
           </motion.div>
