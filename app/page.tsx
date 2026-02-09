@@ -94,13 +94,25 @@ export default function Home() {
                 These specifications ensure the solution addresses the core safety challenges while maintaining user-centric design, regulatory compliance, and long-term durability essential for a primary mobility aid.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Design Concepts
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Design concepts explore possible approaches to meeting the solution requirements. The full document presents and justifies design options, trade-offs, and conceptual solutions that inform the prototype and final product development for the Advanced Multi-Sensing Mobility System.
+              </p>
+              <p className="text-gray-400 leading-relaxed">
+                View the full Design Concepts document for detailed exploration of design alternatives and their justification.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            className="flex flex-col sm:flex-row flex-wrap gap-4 justify-center items-center mb-12"
           >
             <Link href="/problem-statement">
               <motion.button
@@ -127,6 +139,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 View Solution Requirements
+              </motion.button>
+            </Link>
+            <Link href="/design-concepts">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                View Design Concepts
               </motion.button>
             </Link>
           </motion.div>

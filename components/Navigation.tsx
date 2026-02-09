@@ -10,6 +10,7 @@ const navItems = [
   { name: "Problem Statement", path: "/problem-statement" },
   { name: "Patents & Products", path: "/patents-products" },
   { name: "Solution Requirements", path: "/solution-requirements" },
+  { name: "Design Concepts", path: "/design-concepts" },
   { name: "About", path: "/about" },
   { name: "Engineering Notebook", path: "/notebook" },
 ];
