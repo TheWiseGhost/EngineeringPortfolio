@@ -106,6 +106,18 @@ export default function Home() {
                 View the full Design Concepts document for detailed exploration of design alternatives and their justification.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Construction of a Testable Prototype
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                This document (Element G) covers the construction of a testable prototype for the Advanced Multi-Sensing Mobility System. It details how design concepts are implemented into a physical prototype that can be evaluated and refined through testing.
+              </p>
+              <p className="text-gray-400 leading-relaxed">
+                View the full document for build details, components, and prototype construction documentation.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -148,6 +160,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 View Design Concepts
+              </motion.button>
+            </Link>
+            <Link href="/testable-prototype">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                View Testable Prototype
               </motion.button>
             </Link>
           </motion.div>

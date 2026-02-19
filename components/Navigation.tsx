@@ -11,6 +11,7 @@ const navItems = [
   { name: "Patents & Products", path: "/patents-products" },
   { name: "Solution Requirements", path: "/solution-requirements" },
   { name: "Design Concepts", path: "/design-concepts" },
+  { name: "Testable Prototype", path: "/testable-prototype" },
   { name: "About", path: "/about" },
   { name: "Engineering Notebook", path: "/notebook" },
 ];
