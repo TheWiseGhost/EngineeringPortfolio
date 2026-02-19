@@ -112,7 +112,7 @@ export default function Home() {
                 Construction of a Testable Prototype
               </h2>
               <p className="text-gray-300 leading-relaxed mb-4">
-                This document (Element G) covers the construction of a testable prototype for the Advanced Multi-Sensing Mobility System. It details how design concepts are implemented into a physical prototype that can be evaluated and refined through testing.
+                This document covers the construction of a testable prototype for the Advanced Multi-Sensing Mobility System. It details how design concepts are implemented into a physical prototype that can be evaluated and refined through testing.
               </p>
               <p className="text-gray-400 leading-relaxed">
                 View the full document for build details, components, and prototype construction documentation.

@@ -26,7 +26,7 @@ export default function TestablePrototype() {
             </h2>
             <div className="prose prose-invert max-w-none">
               <p className="text-gray-300 leading-relaxed whitespace-pre-line">
-                This document (Element G) covers the construction of a testable prototype for the Advanced Multi-Sensing Mobility System. It details how the design concepts are implemented into a physical prototype that can be evaluated and refined through testing.
+                This document covers the construction of a testable prototype for the Advanced Multi-Sensing Mobility System. It details how the design concepts are implemented into a physical prototype that can be evaluated and refined through testing.
               </p>
             </div>
           </motion.div>
@@ -69,7 +69,7 @@ export default function TestablePrototype() {
               <iframe
                 src="https://docs.google.com/document/d/1q-rpXOas-05PlYw5fz0fzbiOnMXdEde20rfrnkDLvz4/preview"
                 className="w-full h-full"
-                title="Construction of a Testable Prototype (Element G)"
+                title="Construction of a Testable Prototype"
                 allow="fullscreen"
               />
             </div>
