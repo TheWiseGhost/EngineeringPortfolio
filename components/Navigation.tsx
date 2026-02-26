@@ -11,6 +11,7 @@ const docItems = [
   { name: "Solution Requirements", path: "/solution-requirements" },
   { name: "Design Concepts", path: "/design-concepts" },
   { name: "Testable Prototype", path: "/testable-prototype" },
+  { name: "Prototype Testing & Data Plan", path: "/prototype-testing" },
 ];
 
 const mainNavItems = [

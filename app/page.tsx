@@ -118,6 +118,18 @@ export default function Home() {
                 View the full document for build details, components, and prototype construction documentation.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Prototype Testing and Data Collection Plan
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                This plan defines design specifications for the visual aid glasses and the testing criteria used to validate the prototype. It includes environmental reliability testing, obstacle detection testing, and user feedback and interface testing, with pass/fail criteria, materials, safety considerations, and data collection tables.
+              </p>
+              <p className="text-gray-400 leading-relaxed">
+                View the full plan for specifications (including those not tested in this phase), stepwise procedures, and example data tables for each test.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -169,6 +181,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 View Testable Prototype
+              </motion.button>
+            </Link>
+            <Link href="/prototype-testing">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                Prototype Testing & Data Plan
               </motion.button>
             </Link>
           </motion.div>
