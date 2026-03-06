@@ -10,6 +10,7 @@ const docItems = [
   { name: "Patents & Products", path: "/patents-products" },
   { name: "Solution Requirements", path: "/solution-requirements" },
   { name: "Design Concepts", path: "/design-concepts" },
+  { name: "STEM & Design Viability", path: "/stem-design-viability" },
   { name: "Testable Prototype", path: "/testable-prototype" },
   { name: "Prototype Testing & Data Plan", path: "/prototype-testing" },
 ];

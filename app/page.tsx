@@ -121,6 +121,18 @@ export default function Home() {
 
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
               <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Application of STEM Principles and Practices and Consideration of Design Viability
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                This document applies STEM principles and practices to the Advanced Multi-Sensing Mobility System and considers the viability of the design. It connects the project to core engineering and scientific methods and evaluates how the solution holds up under real-world constraints and criteria.
+              </p>
+              <p className="text-gray-400 leading-relaxed">
+                View the full document for detailed analysis and consideration of design viability.
+              </p>
+            </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
                 Prototype Testing and Data Collection Plan
               </h2>
               <p className="text-gray-300 leading-relaxed mb-4">
@@ -172,6 +184,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 View Design Concepts
+              </motion.button>
+            </Link>
+            <Link href="/stem-design-viability">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                STEM & Design Viability
               </motion.button>
             </Link>
             <Link href="/testable-prototype">
