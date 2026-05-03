@@ -142,6 +142,18 @@ export default function Home() {
                 View the full plan for specifications (including those not tested in this phase), stepwise procedures, and example data tables for each test.
               </p>
             </div>
+
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 text-left">
+              <h2 className="font-display text-2xl font-semibold mb-4 text-white">
+                Testing, Data Collection, and Analysis
+              </h2>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                This report turns the formal testing plan into evidence: structured trial records, datasheets, and analysis against pass thresholds for environmental reliability (&gt;98% obstacle avoidance under varied lighting and simulated weather), obstacle-type classification with mapped haptic patterns, and user-interface trials for directional vibration and staged low-battery warnings.
+              </p>
+              <p className="text-gray-400 leading-relaxed">
+                Open the page for a fuller overview of methodology and scope; the embedded Google Doc carries tables, outcomes, and written conclusions from the full report.
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -211,6 +223,15 @@ export default function Home() {
                 className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 Prototype Testing & Data Plan
+              </motion.button>
+            </Link>
+            <Link href="/testing-data-analysis">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              >
+                Testing & Data Analysis
               </motion.button>
             </Link>
           </motion.div>

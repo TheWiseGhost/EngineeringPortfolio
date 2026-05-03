@@ -13,6 +13,7 @@ const docItems = [
   { name: "STEM & Design Viability", path: "/stem-design-viability" },
   { name: "Testable Prototype", path: "/testable-prototype" },
   { name: "Prototype Testing & Data Plan", path: "/prototype-testing" },
+  { name: "Testing & Data Analysis", path: "/testing-data-analysis" },
 ];
 
 const mainNavItems = [
