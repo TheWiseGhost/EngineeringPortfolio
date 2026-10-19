@@ -38,9 +38,9 @@ export default function Process() {
               transition={{ duration: 0.6, delay: (i % 4) * 0.05, ease: EASE }}
               className="border-b border-fg/10"
             >
-              <Link href={`/${el.slug}`} className="group relative flex items-start gap-5 overflow-hidden py-7 md:gap-8">
+              <Link href={`/${el.slug}`} className="group relative flex items-start gap-4 overflow-hidden px-3 py-7 md:gap-6 md:px-5">
                 <span className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-ember-500/[0.08] to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100" />
-                <span className="relative w-10 pt-1 font-mono text-sm text-fg/30 transition-colors group-hover:text-ember-500">
+                <span className="relative w-12 shrink-0 font-display text-xl font-semibold leading-tight tracking-tight text-fg/25 transition-colors group-hover:text-ember-500 md:w-16 md:text-2xl">
                   {el.code}
                 </span>
                 <div className="relative flex-1">
@@ -48,7 +48,7 @@ export default function Process() {
                   <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-fg/45">{el.summary}</p>
                 </div>
                 <span className="relative mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-fg/15 text-fg/60 transition-all duration-300 group-hover:rotate-45 group-hover:border-ember-500 group-hover:bg-ember-500 group-hover:text-inv">
-                  <Arrow className="h-4 w-4 -rotate-45" />
+                  <Arrow className="h-4 w-4" />
                 </span>
               </Link>
             </motion.li>
