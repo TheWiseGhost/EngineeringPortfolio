@@ -18,7 +18,7 @@ export default function Drawings() {
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="max-w-lg leading-relaxed text-white/55 md:justify-self-end">
+          <p className="max-w-lg leading-relaxed text-fg/55 md:justify-self-end">
             Sensor placement follows directly from the problem: the array sits on the brow bar, pitched down so drop-offs
             are caught a metre ahead, with the upper field covering overhangs a cane will never touch.
           </p>
@@ -49,11 +49,11 @@ export default function Drawings() {
 
 function TitleBlock({ rows }: { rows: [string, string][] }) {
   return (
-    <div className="grid grid-cols-3 border-t border-white/10 font-mono text-[10px] uppercase tracking-[0.15em]">
+    <div className="grid grid-cols-3 border-t border-fg/10 font-mono text-[10px] uppercase tracking-[0.15em]">
       {rows.map(([k, v], i) => (
-        <div key={k} className={`px-4 py-3 ${i > 0 ? "border-l border-white/10" : ""}`}>
-          <div className="text-white/30">{k}</div>
-          <div className="mt-1 truncate text-white/80">{v}</div>
+        <div key={k} className={`px-4 py-3 ${i > 0 ? "border-l border-fg/10" : ""}`}>
+          <div className="text-fg/30">{k}</div>
+          <div className="mt-1 truncate text-fg/80">{v}</div>
         </div>
       ))}
     </div>

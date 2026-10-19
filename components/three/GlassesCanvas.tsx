@@ -72,9 +72,10 @@ function Rig({
       explode.current = THREE.MathUtils.lerp(explode.current, e, k);
       beams.current = THREE.MathUtils.lerp(beams.current, 1 - smooth(0.04, 0.18, p) + smooth(0.75, 0.9, p), k);
       const narrow = state.viewport.aspect < 1;
-      g.position.x = state.viewport.aspect > 1.2 ? 0.55 : 0;
+      g.position.x = 0;
       g.position.y = narrow ? 0.45 : 0;
-      g.scale.setScalar(narrow ? 0.58 : 1);
+      // Fit the exploded spread (~3.4 units wide incl. labels) to the canvas width.
+      g.scale.setScalar(THREE.MathUtils.clamp(state.viewport.aspect / 1.55, 0.58, 1));
       g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, -0.85 + Math.sin(p * Math.PI) * 0.65 + state.pointer.x * 0.1, k * 0.6);
       g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, 0.28 - p * 0.12, k * 0.6);
     }
@@ -138,10 +139,10 @@ export default function GlassesCanvas({
           args={[20, 20]}
           cellSize={0.2}
           cellThickness={0.6}
-          cellColor="#2a2a2a"
+          cellColor="#d6d4ce"
           sectionSize={1}
           sectionThickness={1}
-          sectionColor="#7a3510"
+          sectionColor="#f3b48c"
           fadeDistance={7}
           fadeStrength={2.2}
           infiniteGrid

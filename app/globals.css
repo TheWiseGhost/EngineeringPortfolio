@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --bg: #070707;
-  --fg: #f5f5f5;
+  --bg: #f4f3ef;
+  --fg: #141414;
   --ember: #ff6b1a;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
@@ -23,7 +23,7 @@ body {
 
 ::selection {
   background: var(--ember);
-  color: #000;
+  color: #fff;
 }
 
 @layer utilities {
@@ -31,13 +31,13 @@ body {
     text-wrap: balance;
   }
   .bg-grid {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(20, 20, 20, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 20, 20, 0.06) 1px, transparent 1px);
     background-size: 64px 64px;
   }
   .bg-grid-fine {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(20, 20, 20, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 20, 20, 0.035) 1px, transparent 1px);
     background-size: 16px 16px;
   }
   .mask-fade {
@@ -47,7 +47,7 @@ body {
     mask-image: linear-gradient(to bottom, black 60%, transparent);
   }
   .text-stroke {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+    -webkit-text-stroke: 1px rgba(20, 20, 20, 0.14);
     color: transparent;
   }
 }

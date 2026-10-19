@@ -10,14 +10,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: {
-          950: "#070707",
-          900: "#0c0c0c",
-          850: "#111111",
-          800: "#161616",
-          700: "#1f1f1f",
-          600: "#2a2a2a",
-        },
+        // Light theme: page canvas, raised panels, foreground ink and its inverse.
+        canvas: "#f4f3ef",
+        panel: "#ffffff",
+        fg: "#141414",
+        inv: "#ffffff",
         ember: {
           300: "#ffb27a",
           400: "#ff8a3d",

@@ -39,16 +39,16 @@ function DimH({ x1, x2, y, label, delay, inView, ext = 0 }: { x1: number; x2: nu
     <g>
       {ext !== 0 && (
         <>
-          <Draw inView={inView} delay={delay} duration={0.4} d={`M${x1},${y + ext} V${y - 6 * Math.sign(ext)}`} stroke="rgba(255,255,255,0.25)" strokeWidth={0.75} />
-          <Draw inView={inView} delay={delay} duration={0.4} d={`M${x2},${y + ext} V${y - 6 * Math.sign(ext)}`} stroke="rgba(255,255,255,0.25)" strokeWidth={0.75} />
+          <Draw inView={inView} delay={delay} duration={0.4} d={`M${x1},${y + ext} V${y - 6 * Math.sign(ext)}`} stroke="rgba(20,20,20,0.25)" strokeWidth={0.75} />
+          <Draw inView={inView} delay={delay} duration={0.4} d={`M${x2},${y + ext} V${y - 6 * Math.sign(ext)}`} stroke="rgba(20,20,20,0.25)" strokeWidth={0.75} />
         </>
       )}
       <Draw inView={inView} delay={delay + 0.2} duration={0.6} d={`M${x1},${y} H${x2}`} stroke="#ff6b1a" strokeWidth={1} />
       <Draw inView={inView} delay={delay + 0.6} duration={0.2} d={`M${x1 + 8},${y - 4} L${x1},${y} L${x1 + 8},${y + 4}`} stroke="#ff6b1a" strokeWidth={1} />
       <Draw inView={inView} delay={delay + 0.6} duration={0.2} d={`M${x2 - 8},${y - 4} L${x2},${y} L${x2 - 8},${y + 4}`} stroke="#ff6b1a" strokeWidth={1} />
       <Fade inView={inView} delay={delay + 0.7}>
-        <rect x={mid - 24} y={y - 9} width={48} height={18} fill="#0c0c0c" />
-        <text x={mid} y={y + 4} textAnchor="middle" className="fill-white font-mono" fontSize={11}>
+        <rect x={mid - 24} y={y - 9} width={48} height={18} fill="#ffffff" />
+        <text x={mid} y={y + 4} textAnchor="middle" className="fill-fg font-mono" fontSize={11}>
           {label}
         </text>
       </Fade>
@@ -64,8 +64,8 @@ function DimV({ y1, y2, x, label, delay, inView }: { y1: number; y2: number; x: 
       <Draw inView={inView} delay={delay + 0.4} duration={0.2} d={`M${x - 4},${y1 + 8} L${x},${y1} L${x + 4},${y1 + 8}`} stroke="#ff6b1a" strokeWidth={1} />
       <Draw inView={inView} delay={delay + 0.4} duration={0.2} d={`M${x - 4},${y2 - 8} L${x},${y2} L${x + 4},${y2 - 8}`} stroke="#ff6b1a" strokeWidth={1} />
       <Fade inView={inView} delay={delay + 0.6}>
-        <rect x={x - 20} y={mid - 9} width={40} height={18} fill="#0c0c0c" />
-        <text x={x} y={mid + 4} textAnchor="middle" className="fill-white font-mono" fontSize={11}>
+        <rect x={x - 20} y={mid - 9} width={40} height={18} fill="#ffffff" />
+        <text x={x} y={mid + 4} textAnchor="middle" className="fill-fg font-mono" fontSize={11}>
           {label}
         </text>
       </Fade>
@@ -76,8 +76,8 @@ function DimV({ y1, y2, x, label, delay, inView }: { y1: number; y2: number; x: 
 export function FrontBlueprint() {
   const ref = useRef<SVGSVGElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px" });
-  const line = { stroke: "rgba(255,255,255,0.85)", strokeWidth: 1.4 };
-  const thin = { stroke: "rgba(255,255,255,0.35)", strokeWidth: 0.9 };
+  const line = { stroke: "rgba(20,20,20,0.85)", strokeWidth: 1.4 };
+  const thin = { stroke: "rgba(20,20,20,0.35)", strokeWidth: 0.9 };
 
   return (
     <svg ref={ref} viewBox="0 0 800 440" className="h-auto w-full" role="img" aria-label="Front-view technical drawing of the smart glasses">
@@ -106,19 +106,19 @@ export function FrontBlueprint() {
         <circle cx={604} cy={118} r={4} fill="#ff6b1a" />
         <rect x={372} y={110} width={56} height={16} rx={3} fill="none" stroke="#ff6b1a" strokeWidth={1.2} />
         <rect x={378} y={114} width={16} height={8} fill="#ff6b1a" />
-        <circle cx={316} cy={118} r={6} fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth={1} />
+        <circle cx={316} cy={118} r={6} fill="none" stroke="rgba(20,20,20,0.8)" strokeWidth={1} />
       </Fade>
 
       {/* callouts */}
       <Fade inView={inView} delay={2.1}>
-        <path d="M196,107 L170,70 H110" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={0.8} />
-        <text x={110} y={64} className="fill-white/70 font-mono" fontSize={10}>A · ULTRASONIC</text>
-        <path d="M400,110 L430,70 H520" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={0.8} />
-        <text x={440} y={64} className="fill-white/70 font-mono" fontSize={10}>B · LIDAR ToF</text>
-        <path d="M316,112 L290,80 H230" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={0.8} />
-        <text x={230} y={74} className="fill-white/70 font-mono" fontSize={10}>C · CAMERA</text>
-        <path d="M604,107 L630,70 H690" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={0.8} />
-        <text x={640} y={64} className="fill-white/70 font-mono" fontSize={10}>A</text>
+        <path d="M196,107 L170,70 H110" fill="none" stroke="rgba(20,20,20,0.4)" strokeWidth={0.8} />
+        <text x={110} y={64} className="fill-fg/70 font-mono" fontSize={10}>A · ULTRASONIC</text>
+        <path d="M400,110 L430,70 H520" fill="none" stroke="rgba(20,20,20,0.4)" strokeWidth={0.8} />
+        <text x={440} y={64} className="fill-fg/70 font-mono" fontSize={10}>B · LIDAR ToF</text>
+        <path d="M316,112 L290,80 H230" fill="none" stroke="rgba(20,20,20,0.4)" strokeWidth={0.8} />
+        <text x={230} y={74} className="fill-fg/70 font-mono" fontSize={10}>C · CAMERA</text>
+        <path d="M604,107 L630,70 H690" fill="none" stroke="rgba(20,20,20,0.4)" strokeWidth={0.8} />
+        <text x={640} y={64} className="fill-fg/70 font-mono" fontSize={10}>A</text>
       </Fade>
 
       {/* dimensions (standard eyewear 52□18-140 sizing, illustrative) */}
@@ -142,7 +142,7 @@ export function DetectionDiagram() {
           <stop offset="1" stopColor="#ff6b1a" stopOpacity="0" />
         </linearGradient>
         <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+          <line x1="0" y1="0" x2="0" y2="8" stroke="rgba(20,20,20,0.15)" strokeWidth="1" />
         </pattern>
       </defs>
 
@@ -150,17 +150,17 @@ export function DetectionDiagram() {
       <Fade inView={inView} delay={0.6}>
         <path d="M20,330 H470 V372 H780 V400 H20 Z" fill="url(#hatch)" />
       </Fade>
-      <Draw inView={inView} delay={0.1} duration={1.4} d="M20,330 H470 V372 H780" stroke="rgba(255,255,255,0.8)" strokeWidth={1.4} />
+      <Draw inView={inView} delay={0.1} duration={1.4} d="M20,330 H470 V372 H780" stroke="rgba(20,20,20,0.8)" strokeWidth={1.4} />
 
       {/* overhanging obstacle */}
       <Fade inView={inView} delay={0.9}>
         <rect x={560} y={20} width={220} height={70} fill="url(#hatch)" />
       </Fade>
-      <Draw inView={inView} delay={0.6} duration={1.2} d="M780,90 H560 V20" stroke="rgba(255,255,255,0.8)" strokeWidth={1.4} />
+      <Draw inView={inView} delay={0.6} duration={1.2} d="M780,90 H560 V20" stroke="rgba(20,20,20,0.8)" strokeWidth={1.4} />
 
       {/* person (head + glasses) */}
-      <Draw inView={inView} delay={0.3} duration={1.2} d="M72,330 V205 Q72,170 105,162 Q138,170 138,205 V330" stroke="rgba(255,255,255,0.45)" strokeWidth={1.1} />
-      <Draw inView={inView} delay={0.4} duration={0.9} d="M77,112 a28,34 0 1,0 56,0 a28,34 0 1,0 -56,0" stroke="rgba(255,255,255,0.55)" strokeWidth={1.1} />
+      <Draw inView={inView} delay={0.3} duration={1.2} d="M72,330 V205 Q72,170 105,162 Q138,170 138,205 V330" stroke="rgba(20,20,20,0.45)" strokeWidth={1.1} />
+      <Draw inView={inView} delay={0.4} duration={0.9} d="M77,112 a28,34 0 1,0 56,0 a28,34 0 1,0 -56,0" stroke="rgba(20,20,20,0.55)" strokeWidth={1.1} />
       <Fade inView={inView} delay={1.1}>
         <rect x={116} y={108} width={22} height={12} rx={3} fill="#ff6b1a" />
       </Fade>
@@ -201,7 +201,7 @@ export function DetectionDiagram() {
       <Fade inView={inView} delay={2.6}>
         <text x={480} y={318} className="fill-ember-500 font-mono" fontSize={10}>DROP-OFF · CONTINUOUS BUZZ</text>
         <text x={570} y={110} className="fill-ember-500 font-mono" fontSize={10}>OVERHANG · SPIKE PULSE</text>
-        <text x={40} y={360} className="fill-white/40 font-mono" fontSize={10}>SIDE ELEVATION · NTS</text>
+        <text x={40} y={360} className="fill-fg/40 font-mono" fontSize={10}>SIDE ELEVATION · NTS</text>
       </Fade>
     </svg>
   );

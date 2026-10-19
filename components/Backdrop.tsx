@@ -47,14 +47,14 @@ export default function Backdrop() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       <div className="absolute inset-0 bg-grid" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,107,26,0.10),transparent_55%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#070707_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#f4f3ef_100%)]" />
       <div
         ref={glowRef}
         className="absolute left-0 top-0 hidden h-[600px] w-[600px] rounded-full bg-[radial-gradient(circle,rgba(255,107,26,0.07),transparent_65%)] md:block"
       />
       <div className="hidden md:block">
-        <div ref={hRef} className="absolute left-0 top-0 h-px w-full bg-white/[0.06]" />
-        <div ref={vRef} className="absolute left-0 top-0 h-full w-px bg-white/[0.06]" />
+        <div ref={hRef} className="absolute left-0 top-0 h-px w-full bg-fg/[0.06]" />
+        <div ref={vRef} className="absolute left-0 top-0 h-full w-px bg-fg/[0.06]" />
         <div
           ref={readoutRef}
           className="absolute left-0 top-0 whitespace-pre font-mono text-[10px] tracking-wider text-ember-500/70"

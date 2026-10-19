@@ -10,7 +10,6 @@ import Logo from "./Logo";
 const links = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Notebook", path: "/notebook" },
 ];
 
 export default function Navigation() {
@@ -56,14 +55,14 @@ export default function Navigation() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className={`flex w-full max-w-6xl items-center justify-between rounded-2xl border px-3 py-2 transition-colors duration-300 ${
             scrolled || docsOpen || mobileOpen
-              ? "border-white/10 bg-ink-900/80 backdrop-blur-xl"
+              ? "border-fg/10 bg-panel/80 backdrop-blur-xl"
               : "border-transparent bg-transparent"
           }`}
         >
           <Link href="/" className="group flex items-center gap-2.5 px-2 py-1">
-            <Logo className="h-5 w-auto text-white transition-colors group-hover:text-ember-500" />
+            <Logo className="h-5 w-auto text-fg transition-colors group-hover:text-ember-500" />
             <span className="font-display text-sm font-semibold tracking-tight">AMS</span>
-            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 sm:inline">
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40 sm:inline">
               / Mobility System
             </span>
           </Link>
@@ -77,7 +76,7 @@ export default function Navigation() {
                 onClick={() => setDocsOpen((o) => !o)}
                 aria-expanded={docsOpen}
                 className={`relative flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm transition-colors ${
-                  isDoc || docsOpen ? "text-white" : "text-white/55 hover:text-white"
+                  isDoc || docsOpen ? "text-fg" : "text-fg/55 hover:text-fg"
                 }`}
               >
                 Documentation
@@ -100,9 +99,9 @@ export default function Navigation() {
                     exit={{ opacity: 0, y: -6, scale: 0.98 }}
                     transition={{ duration: 0.18 }}
                     style={{ x: "-50%" }}
-                    className="absolute left-1/2 top-full mt-3 w-[560px] overflow-hidden rounded-2xl border border-white/10 bg-ink-900 p-2 shadow-2xl shadow-black/80"
+                    className="absolute left-1/2 top-full mt-3 w-[560px] overflow-hidden rounded-2xl border border-fg/10 bg-panel p-2 shadow-2xl shadow-inv/80"
                   >
-                    <div className="flex items-center justify-between px-3 pb-2 pt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                    <div className="flex items-center justify-between px-3 pb-2 pt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">
                       <span>Engineering Design Process</span>
                       <span className="text-ember-500">08 Elements</span>
                     </div>
@@ -114,17 +113,17 @@ export default function Navigation() {
                             key={el.slug}
                             href={`/${el.slug}`}
                             className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors ${
-                              active ? "bg-ember-500/10" : "hover:bg-white/[0.04]"
+                              active ? "bg-ember-500/10" : "hover:bg-fg/[0.04]"
                             }`}
                           >
                             <span
                               className={`font-mono text-xs ${
-                                active ? "text-ember-500" : "text-white/30 group-hover:text-ember-500"
+                                active ? "text-ember-500" : "text-fg/30 group-hover:text-ember-500"
                               } transition-colors`}
                             >
                               {el.code}
                             </span>
-                            <span className={`text-sm ${active ? "text-white" : "text-white/70 group-hover:text-white"}`}>
+                            <span className={`text-sm ${active ? "text-fg" : "text-fg/70 group-hover:text-fg"}`}>
                               {el.short}
                             </span>
                           </Link>
@@ -144,16 +143,16 @@ export default function Navigation() {
 
           <Link
             href="/notebook"
-            className="hidden items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-ember-500 md:flex"
+            className="hidden items-center gap-2 rounded-xl bg-fg px-4 py-2 text-sm font-medium text-inv transition-colors hover:bg-ember-500 md:flex"
           >
-            Open Notebook
+            Open engineering notebook
             <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
               <path d="M7 17L17 7M9 7h8v8" />
             </svg>
           </Link>
 
           <button
-            className="rounded-lg p-2 text-white/70 hover:text-white md:hidden"
+            className="rounded-lg p-2 text-fg/70 hover:text-fg md:hidden"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
@@ -176,21 +175,21 @@ export default function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-ink-950/95 px-6 pb-10 pt-24 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 overflow-y-auto bg-canvas/95 px-6 pb-10 pt-24 backdrop-blur-xl md:hidden"
           >
             <div className="space-y-1">
-              {links.map((l, i) => (
+              {[...links, { name: "Notebook", path: "/notebook" }].map((l, i) => (
                 <motion.div key={l.path} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
                   <Link
                     href={l.path}
-                    className={`block py-2 font-display text-3xl font-medium ${pathname === l.path ? "text-ember-500" : "text-white"}`}
+                    className={`block py-2 font-display text-3xl font-medium ${pathname === l.path ? "text-ember-500" : "text-fg"}`}
                   >
                     {l.name}
                   </Link>
                 </motion.div>
               ))}
             </div>
-            <div className="mt-8 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+            <div className="mt-8 border-t border-fg/10 pt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">
               Documentation
             </div>
             <div className="mt-3 space-y-1">
@@ -203,7 +202,7 @@ export default function Navigation() {
                 >
                   <Link href={`/${el.slug}`} className="flex items-baseline gap-3 py-2">
                     <span className="font-mono text-xs text-ember-500">{el.code}</span>
-                    <span className={pathname === `/${el.slug}` ? "text-white" : "text-white/70"}>{el.short}</span>
+                    <span className={pathname === `/${el.slug}` ? "text-fg" : "text-fg/70"}>{el.short}</span>
                   </Link>
                 </motion.div>
               ))}
@@ -220,7 +219,7 @@ function NavLink({ href, active, children }: { href: string; active: boolean; ch
     <Link
       href={href}
       className={`relative rounded-lg px-3.5 py-2 text-sm transition-colors ${
-        active ? "text-white" : "text-white/55 hover:text-white"
+        active ? "text-fg" : "text-fg/55 hover:text-fg"
       }`}
     >
       {children}

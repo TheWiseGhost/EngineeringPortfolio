@@ -11,7 +11,7 @@ export default function TestingDataAnalysis() {
             team&apos;s formal testing plan: recorded trials, structured datasheets, and quantitative comparison to the
             pass criteria defined before data collection.
           </p>
-          <p className="text-base text-white/55">
+          <p className="text-base text-fg/55">
             Testing focused on whether sensing and feedback behaved reliably enough for daily mobility — especially
             obstacle avoidance and hazard recognition — rather than on marketing claims or unfinished features that were
             explicitly deferred (such as full fall-detection networking or certification-level environmental sealing).
@@ -37,14 +37,14 @@ export default function TestingDataAnalysis() {
             d: "Directional pulses for left, right and center threats, escalating proximity cues, and staged low-power warnings measured against recognition accuracy and minimum warning lead time.",
           },
         ].map((c) => (
-          <div key={c.k} className="group rounded-2xl border border-white/10 bg-ink-900/60 p-6 transition-colors hover:border-ember-500/50">
+          <div key={c.k} className="group rounded-2xl border border-fg/10 bg-panel/60 p-6 transition-colors hover:border-ember-500/50">
             <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-ember-500">{c.k}</div>
             <h3 className="mt-3 font-display text-xl font-medium tracking-tight">{c.t}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-white/55">{c.d}</p>
+            <p className="mt-3 text-sm leading-relaxed text-fg/55">{c.d}</p>
           </div>
         ))}
       </div>
-      <p className="text-sm leading-relaxed text-white/45">
+      <p className="text-sm leading-relaxed text-fg/45">
         Analysis ties raw datasheet entries to those criteria, highlights where hardware or tuning fell short, and states
         conclusions that feed iteration priorities — what must change before the device could responsibly scale toward
         broader user trials or regulatory review. The embedded document below is the authoritative written report.

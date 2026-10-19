@@ -31,9 +31,9 @@ export function Reveal({
 
 export function Eyebrow({ children, index }: { children: ReactNode; index?: string }) {
   return (
-    <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-white/50">
+    <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.22em] text-fg/50">
       {index && <span className="text-ember-500">{index}</span>}
-      <span className="h-px w-8 bg-white/20" />
+      <span className="h-px w-8 bg-fg/20" />
       <span>{children}</span>
     </div>
   );
@@ -49,7 +49,16 @@ export function Counter({ to, decimals = 0, suffix = "", prefix = "" }: { to: nu
     const c = animate(mv, to, { duration: 2, ease: [0.16, 1, 0.3, 1] });
     return () => c.stop();
   }, [inView, mv, to]);
-  return <motion.span ref={ref}>{text}</motion.span>;
+  // Reserve the final value's width and right-align the ticking number so layout never shifts.
+  return (
+    <span ref={ref} className="relative inline-block whitespace-nowrap tabular-nums">
+      <span className="invisible" aria-hidden>{`${prefix}${to.toFixed(decimals)}${suffix}`}</span>
+      <span className="sr-only">{`${prefix}${to.toFixed(decimals)}${suffix}`}</span>
+      <motion.span className="absolute inset-0 text-right" aria-hidden>
+        {text}
+      </motion.span>
+    </span>
+  );
 }
 
 export function Arrow({ className = "h-4 w-4" }: { className?: string }) {
@@ -84,11 +93,11 @@ export function SplitHeading({ text, className = "", delay = 0 }: { text: string
 
 export function Panel({ children, className = "", title, meta }: { children: ReactNode; className?: string; title?: string; meta?: string }) {
   return (
-    <div className={`cad-frame rounded-sm border border-white/10 bg-ink-900/70 backdrop-blur-sm ${className}`}>
+    <div className={`cad-frame rounded-sm border border-fg/10 bg-panel/70 backdrop-blur-sm ${className}`}>
       {(title || meta) && (
-        <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]">
-          <span className="text-white/60">{title}</span>
-          <span className="text-white/30">{meta}</span>
+        <div className="flex items-center justify-between border-b border-fg/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]">
+          <span className="text-fg/60">{title}</span>
+          <span className="text-fg/30">{meta}</span>
         </div>
       )}
       {children}

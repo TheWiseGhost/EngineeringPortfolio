@@ -24,8 +24,8 @@ const stats = [
 export default function Problem() {
   return (
     <>
-      <div className="relative z-10 overflow-hidden border-y border-white/10 bg-ink-950/70 py-4 backdrop-blur">
-        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-mono text-xs uppercase tracking-[0.25em] text-white/40">
+      <div className="relative z-10 overflow-hidden border-y border-fg/10 bg-canvas/70 py-4 backdrop-blur">
+        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-mono text-xs uppercase tracking-[0.25em] text-fg/40">
           {[...marquee, ...marquee].map((m, i) => (
             <span key={i} className="flex items-center gap-10">
               {m}
@@ -41,34 +41,34 @@ export default function Problem() {
         </Reveal>
         <div className="mt-10 grid items-end gap-10 md:grid-cols-[1.1fr_1fr]">
           <Reveal>
-            <div className="font-display text-[clamp(6rem,18vw,15rem)] font-semibold leading-[0.8] tracking-[-0.06em]">
+            <div className="whitespace-nowrap font-display text-[clamp(4.5rem,12vw,11rem)] font-semibold leading-[0.85] tracking-[-0.035em]">
               <Counter to={46.7} decimals={1} />
               <span className="text-ember-500">%</span>
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="font-display text-2xl leading-snug tracking-tight text-white md:text-3xl">
+            <p className="font-display text-2xl leading-snug tracking-tight text-fg md:text-3xl">
               of visually impaired people report a fall every year.
             </p>
-            <p className="mt-5 leading-relaxed text-white/55">
+            <p className="mt-5 leading-relaxed text-fg/55">
               The white cane sweeps the ground directly ahead — but it can&apos;t reliably warn about a{" "}
-              <span className="text-white">steep drop-off</span> a metre away, or an{" "}
-              <span className="text-white">overhanging obstacle</span> at head height. Falls lead to injury and a loss
+              <span className="text-fg">steep drop-off</span> a metre away, or an{" "}
+              <span className="text-fg">overhanging obstacle</span> at head height. Falls lead to injury and a loss
               of independence. A more reliable aid is urgently needed.
             </p>
           </Reveal>
         </div>
 
-        <Reveal className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-4">
+        <Reveal className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-fg/10 bg-fg/10 md:grid-cols-4">
           {stats.map((s, i) => (
-            <div key={s.label} className="group bg-ink-950 p-6 transition-colors hover:bg-ink-900 md:p-8">
-              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">
+            <div key={s.label} className="group bg-canvas p-6 transition-colors hover:bg-panel md:p-8">
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/30">
                 SPEC-{String(i + 1).padStart(2, "0")}
               </div>
               <div className="mt-6 font-display text-4xl font-semibold tracking-tight md:text-5xl">
                 <Counter to={s.value} decimals={s.decimals} prefix={s.prefix} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-sm text-white/50">{s.label}</div>
+              <div className="mt-2 text-sm text-fg/50">{s.label}</div>
               <div className="mt-6 h-px w-full origin-left scale-x-0 bg-ember-500 transition-transform duration-500 group-hover:scale-x-100" />
             </div>
           ))}

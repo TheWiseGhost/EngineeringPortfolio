@@ -17,18 +17,18 @@ export default function Process() {
             <h2 className="mt-8 font-display text-4xl font-semibold leading-[1.02] tracking-tight md:text-5xl">
               Eight elements,
               <br />
-              <span className="text-white/40">one system.</span>
+              <span className="text-fg/40">one system.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="mt-5 leading-relaxed text-white/55">
+            <p className="mt-5 leading-relaxed text-fg/55">
               From problem definition to tested prototype — each stage of the engineering design process is documented
               in full.
             </p>
           </Reveal>
         </div>
 
-        <ol className="border-t border-white/10">
+        <ol className="border-t border-fg/10">
           {elements.map((el, i) => (
             <motion.li
               key={el.slug}
@@ -36,18 +36,18 @@ export default function Process() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-8% 0px" }}
               transition={{ duration: 0.6, delay: (i % 4) * 0.05, ease: EASE }}
-              className="border-b border-white/10"
+              className="border-b border-fg/10"
             >
               <Link href={`/${el.slug}`} className="group relative flex items-start gap-5 overflow-hidden py-7 md:gap-8">
                 <span className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-ember-500/[0.08] to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100" />
-                <span className="relative w-10 pt-1 font-mono text-sm text-white/30 transition-colors group-hover:text-ember-500">
+                <span className="relative w-10 pt-1 font-mono text-sm text-fg/30 transition-colors group-hover:text-ember-500">
                   {el.code}
                 </span>
                 <div className="relative flex-1">
-                  <h3 className="font-display text-xl font-medium tracking-tight text-white md:text-2xl">{el.title}</h3>
-                  <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-white/45">{el.summary}</p>
+                  <h3 className="font-display text-xl font-medium tracking-tight text-fg md:text-2xl">{el.title}</h3>
+                  <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-fg/45">{el.summary}</p>
                 </div>
-                <span className="relative mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/60 transition-all duration-300 group-hover:rotate-45 group-hover:border-ember-500 group-hover:bg-ember-500 group-hover:text-black">
+                <span className="relative mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-fg/15 text-fg/60 transition-all duration-300 group-hover:rotate-45 group-hover:border-ember-500 group-hover:bg-ember-500 group-hover:text-inv">
                   <Arrow className="h-4 w-4 -rotate-45" />
                 </span>
               </Link>

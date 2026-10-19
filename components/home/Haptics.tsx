@@ -64,7 +64,7 @@ export default function Haptics() {
       const now = (performance.now() - t0) / 1000;
       const window_ = 4; // seconds shown
       // baseline grid
-      ctx.strokeStyle = "rgba(255,255,255,0.06)";
+      ctx.strokeStyle = "rgba(20,20,20,0.06)";
       ctx.lineWidth = 1;
       for (let i = 1; i < 4; i++) {
         ctx.beginPath();
@@ -120,7 +120,7 @@ export default function Haptics() {
         </h2>
       </Reveal>
       <Reveal delay={0.08}>
-        <p className="mt-5 max-w-xl leading-relaxed text-white/55">
+        <p className="mt-5 max-w-xl leading-relaxed text-fg/55">
           Discreet, non-audio feedback. Each obstacle class and direction maps to a distinct vibration pattern, targeting
           100% user recognition. Pick one to feel it.
         </p>
@@ -130,7 +130,7 @@ export default function Haptics() {
         <Reveal className="space-y-6">
           {groups.map((g) => (
             <div key={g}>
-              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">{g}</div>
+              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-fg/35">{g}</div>
               <div className="flex flex-wrap gap-2">
                 {patterns.map((p, i) =>
                   p.group !== g ? null : (
@@ -140,8 +140,8 @@ export default function Haptics() {
                       onMouseEnter={() => setActive(i)}
                       className={`rounded-lg border px-3 py-2 text-left text-sm transition-all ${
                         active === i
-                          ? "border-ember-500 bg-ember-500/10 text-white"
-                          : "border-white/10 text-white/60 hover:border-white/30 hover:text-white"
+                          ? "border-ember-500 bg-ember-500/10 text-fg"
+                          : "border-fg/10 text-fg/60 hover:border-fg/30 hover:text-fg"
                       }`}
                     >
                       {p.name}
@@ -154,24 +154,24 @@ export default function Haptics() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="cad-frame overflow-hidden rounded-sm border border-white/10 bg-ink-900/70">
-            <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]">
-              <span className="text-white/60">Actuator Monitor</span>
+          <div className="cad-frame overflow-hidden rounded-sm border border-fg/10 bg-panel/70">
+            <div className="flex items-center justify-between border-b border-fg/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span className="text-fg/60">Actuator Monitor</span>
               <span className="flex items-center gap-2 text-ember-500">
                 <span className="h-1.5 w-1.5 animate-blink rounded-full bg-ember-500" /> Live
               </span>
             </div>
             <div className="grid gap-0 sm:grid-cols-[200px_1fr]">
-              <div className="flex items-center justify-center border-b border-white/10 p-6 sm:border-b-0 sm:border-r">
+              <div className="flex items-center justify-center border-b border-fg/10 p-6 sm:border-b-0 sm:border-r">
                 {/* top-down head */}
                 <svg viewBox="0 0 140 150" className="h-40 w-auto overflow-visible">
                   {/* top-down head */}
-                  <circle cx="70" cy="80" r="40" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.2" />
-                  <path d="M64,41 L70,32 L76,41" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.2" />
-                  <path d="M28,70 q-6,10 0,20 M112,70 q6,10 0,20" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1.2" />
+                  <circle cx="70" cy="80" r="40" fill="none" stroke="rgba(20,20,20,0.3)" strokeWidth="1.2" />
+                  <path d="M64,41 L70,32 L76,41" fill="none" stroke="rgba(20,20,20,0.3)" strokeWidth="1.2" />
+                  <path d="M28,70 q-6,10 0,20 M112,70 q6,10 0,20" fill="none" stroke="rgba(20,20,20,0.3)" strokeWidth="1.2" />
                   {/* glasses: front bar + temples */}
-                  <path d="M30,52 Q70,34 110,52" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="3" strokeLinecap="round" />
-                  <path d="M30,52 L28,98 M110,52 L112,98" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M30,52 Q70,34 110,52" fill="none" stroke="rgba(20,20,20,0.85)" strokeWidth="3" strokeLinecap="round" />
+                  <path d="M30,52 L28,98 M110,52 L112,98" fill="none" stroke="rgba(20,20,20,0.55)" strokeWidth="2" strokeLinecap="round" />
                   <g ref={left} style={{ transformOrigin: "26px 86px", transformBox: "view-box" }}>
                     <circle cx="26" cy="86" r="12" fill="none" stroke="#ff6b1a" strokeOpacity="0.45" />
                     <circle cx="26" cy="86" r="6.5" fill="#ff6b1a" />
@@ -180,19 +180,19 @@ export default function Haptics() {
                     <circle cx="114" cy="86" r="12" fill="none" stroke="#ff6b1a" strokeOpacity="0.45" />
                     <circle cx="114" cy="86" r="6.5" fill="#ff6b1a" />
                   </g>
-                  <text x="26" y="140" textAnchor="middle" className="fill-white/40 font-mono" fontSize="9">L</text>
-                  <text x="114" y="140" textAnchor="middle" className="fill-white/40 font-mono" fontSize="9">R</text>
-                  <text x="70" y="26" textAnchor="middle" className="fill-white/30 font-mono" fontSize="7">FRONT</text>
+                  <text x="26" y="140" textAnchor="middle" className="fill-fg/40 font-mono" fontSize="9">L</text>
+                  <text x="114" y="140" textAnchor="middle" className="fill-fg/40 font-mono" fontSize="9">R</text>
+                  <text x="70" y="26" textAnchor="middle" className="fill-fg/30 font-mono" fontSize="7">FRONT</text>
                 </svg>
               </div>
               <div className="p-5">
                 <div className="flex items-baseline justify-between">
                   <div className="font-display text-2xl font-medium tracking-tight">{current.name}</div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">{current.group}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">{current.group}</div>
                 </div>
                 <div className="mt-1 text-sm text-ember-400">{current.desc}</div>
                 <canvas ref={canvas} className="mt-5 h-32 w-full" />
-                <div className="mt-2 flex justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-white/30">
+                <div className="mt-2 flex justify-between font-mono text-[9px] uppercase tracking-[0.2em] text-fg/30">
                   <span>−4.0 s</span>
                   <span>Amplitude</span>
                   <span>Now</span>

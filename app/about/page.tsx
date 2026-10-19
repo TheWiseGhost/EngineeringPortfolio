@@ -24,7 +24,7 @@ export default function About() {
         <div className="mt-20 grid gap-12 lg:grid-cols-[300px_1fr]">
           <Reveal>
             <div className="lg:sticky lg:top-28">
-              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">The team</div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">The team</div>
               <div className="mt-6 space-y-3">
                 {team.map((n, i) => (
                   <motion.div
@@ -32,9 +32,9 @@ export default function About() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 + i * 0.1, ease: EASE }}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-ink-900/60 px-4 py-3"
+                    className="flex items-center gap-3 rounded-xl border border-fg/10 bg-panel/60 px-4 py-3"
                   >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 font-mono text-[11px]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-fg/10 font-mono text-[11px]">
                       {n.split(" ").map((p) => p[0]).join("")}
                     </span>
                     <span className="text-sm">{n}</span>
@@ -47,7 +47,7 @@ export default function About() {
           <div className="space-y-10">
             {paragraphs.map((p, i) => (
               <Reveal key={i} delay={i * 0.05}>
-                <p className={`leading-relaxed ${i === 0 ? "font-display text-2xl tracking-tight text-white md:text-3xl" : "text-lg text-white/60"}`}>
+                <p className={`leading-relaxed ${i === 0 ? "font-display text-2xl tracking-tight text-fg md:text-3xl" : "text-lg text-fg/60"}`}>
                   {p}
                 </p>
               </Reveal>
@@ -64,13 +64,13 @@ export default function About() {
                 href="https://adityabyju.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-6 flex items-center justify-between rounded-2xl border border-white/10 bg-ink-900/60 p-6 transition-colors hover:border-ember-500/60"
+                className="group mt-6 flex items-center justify-between rounded-2xl border border-fg/10 bg-panel/60 p-6 transition-colors hover:border-ember-500/60"
               >
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Connect</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">Connect</div>
                   <div className="mt-2 font-display text-2xl font-medium tracking-tight">View my portfolio</div>
                 </div>
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black transition-all group-hover:rotate-45 group-hover:bg-ember-500">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-fg text-inv transition-all group-hover:rotate-45 group-hover:bg-ember-500">
                   <Arrow className="h-5 w-5" />
                 </span>
               </a>

@@ -93,7 +93,7 @@ function Part({ explode, dir, children, label, sub, labelOffset = [0, 0.08, 0], 
         <Html position={labelOffset} center zIndexRange={[20, 0]} style={{ pointerEvents: "none" }}>
           <div ref={labelRef} style={{ opacity: 0 }} className="flex items-center gap-2 whitespace-nowrap">
             <span className="h-1.5 w-1.5 rounded-full bg-ember-500 shadow-[0_0_10px_#ff6b1a]" />
-            <span className="rounded-md border border-white/15 bg-black/70 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-white backdrop-blur">
+            <span className="rounded-md border border-fg/15 bg-inv/70 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-fg backdrop-blur">
               {label}
               {sub && <span className="ml-1.5 text-ember-400">{sub}</span>}
             </span>
@@ -118,8 +118,8 @@ const beamFragment = /* glsl */ `
   varying vec2 vUv;
   void main() {
     float along = vUv.y;               // 1 at the emitter, 0 at the far end
-    float base = pow(along, 2.6) * 0.16;
-    float band = smoothstep(0.06, 0.0, abs(fract(vUv.y + uTime * 0.45) - 0.5)) * 0.22 * along;
+    float base = pow(along, 2.4) * 0.24;
+    float band = smoothstep(0.06, 0.0, abs(fract(vUv.y + uTime * 0.45) - 0.5)) * 0.35 * along;
     float stripes = step(0.5, fract(vUv.x * 48.0)) * 0.05 * along;
     gl_FragColor = vec4(uColor, (base + band + stripes) * uIntensity);
   }
@@ -162,7 +162,7 @@ function Beam({
           transparent
           depthWrite={false}
           side={THREE.DoubleSide}
-          blending={THREE.AdditiveBlending}
+          blending={THREE.NormalBlending}
         />
       </mesh>
     </group>
@@ -197,18 +197,18 @@ export default function GlassesModel({ explode, beams, showLabels = false }: Gla
   const lensMat = useMemo(
     () =>
       new THREE.MeshPhysicalMaterial({
-        color: "#202020",
+        color: "#ffffff",
         metalness: 0,
         roughness: 0.05,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.18,
         clearcoat: 1,
         side: THREE.DoubleSide,
       }),
     []
   );
 
-  const edge = "#5a5a5a";
+  const edge = "#8a8a8a";
   const edgeHot = ORANGE;
 
   return (

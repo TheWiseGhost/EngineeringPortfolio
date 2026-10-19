@@ -167,22 +167,22 @@ export default function PrototypeTesting() {
         <Reveal>
           <div className="flex items-end justify-between">
             <h2 className="font-display text-3xl font-semibold tracking-tight">Design specifications</h2>
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Priority ↓</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/30">Priority ↓</span>
           </div>
         </Reveal>
         <div className="mt-6 grid gap-3 md:grid-cols-2">
           {specs.map((s, i) => (
             <Reveal key={s.t} delay={(i % 2) * 0.06}>
-              <div className="h-full rounded-2xl border border-white/10 bg-ink-900/60 p-5 transition-colors hover:border-white/25">
+              <div className="h-full rounded-2xl border border-fg/10 bg-panel/60 p-5 transition-colors hover:border-fg/25">
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-xs text-ember-500">P{i + 1}</span>
-                  <h3 className="font-medium text-white">{s.t}</h3>
+                  <h3 className="font-medium text-fg">{s.t}</h3>
                 </div>
                 <dl className="mt-4 space-y-3">
                   {s.items.map(([k, v]) => (
                     <div key={k}>
-                      <dt className="text-sm text-white/80">{k}</dt>
-                      <dd className="text-sm leading-relaxed text-white/45">{v}</dd>
+                      <dt className="text-sm text-fg/80">{k}</dt>
+                      <dd className="text-sm leading-relaxed text-fg/45">{v}</dd>
                     </div>
                   ))}
                 </dl>
@@ -193,12 +193,12 @@ export default function PrototypeTesting() {
 
         <button
           onClick={() => setShowDeferred((s) => !s)}
-          className="mt-4 flex w-full items-center justify-between rounded-2xl border border-dashed border-white/15 px-5 py-4 text-left transition-colors hover:border-white/30"
+          className="mt-4 flex w-full items-center justify-between rounded-2xl border border-dashed border-fg/15 px-5 py-4 text-left transition-colors hover:border-fg/30"
           aria-expanded={showDeferred}
         >
           <span>
             <span className="font-medium">Specifications not tested in this phase</span>
-            <span className="ml-3 font-mono text-xs text-white/40">{deferred.length} items</span>
+            <span className="ml-3 font-mono text-xs text-fg/40">{deferred.length} items</span>
           </span>
           <span className={`text-ember-500 transition-transform ${showDeferred ? "rotate-45" : ""}`}>+</span>
         </button>
@@ -213,8 +213,8 @@ export default function PrototypeTesting() {
               <div className="grid gap-x-8 gap-y-4 px-5 pt-5 md:grid-cols-2">
                 {deferred.map(([k, v]) => (
                   <li key={k} className="text-sm">
-                    <div className="text-white/80">{k}</div>
-                    <div className="leading-relaxed text-white/45">{v}</div>
+                    <div className="text-fg/80">{k}</div>
+                    <div className="leading-relaxed text-fg/45">{v}</div>
                   </li>
                 ))}
               </div>
@@ -227,25 +227,25 @@ export default function PrototypeTesting() {
       <section>
         <Reveal>
           <h2 className="font-display text-3xl font-semibold tracking-tight">Testing criteria</h2>
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40">
+          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.15em] text-fg/40">
             Shrihit Bhattiprolu · Aditya Byju · Anirudh Tarur · March 5–6, 2026
           </p>
         </Reveal>
 
-        <div className="mt-6 flex gap-1 overflow-x-auto rounded-2xl border border-white/10 bg-ink-900/60 p-1">
+        <div className="mt-6 flex gap-1 overflow-x-auto rounded-2xl border border-fg/10 bg-panel/60 p-1">
           {tests.map((x, i) => (
             <button
               key={x.name}
               onClick={() => setTab(i)}
               className={`relative flex-1 whitespace-nowrap rounded-xl px-4 py-3 text-left text-sm transition-colors ${
-                tab === i ? "text-black" : "text-white/60 hover:text-white"
+                tab === i ? "text-inv" : "text-fg/60 hover:text-fg"
               }`}
             >
               {tab === i && (
-                <motion.span layoutId="test-tab" className="absolute inset-0 rounded-xl bg-white" transition={{ type: "spring", stiffness: 400, damping: 35 }} />
+                <motion.span layoutId="test-tab" className="absolute inset-0 rounded-xl bg-fg" transition={{ type: "spring", stiffness: 400, damping: 35 }} />
               )}
               <span className="relative">
-                <span className={`mr-2 font-mono text-xs ${tab === i ? "text-ember-600" : "text-white/30"}`}>T{i + 1}</span>
+                <span className={`mr-2 font-mono text-xs ${tab === i ? "text-ember-600" : "text-fg/30"}`}>T{i + 1}</span>
                 {x.name}
               </span>
             </button>
@@ -259,43 +259,43 @@ export default function PrototypeTesting() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25 }}
-            className="mt-4 rounded-2xl border border-white/10 bg-ink-900/60 p-6 md:p-8"
+            className="mt-4 rounded-2xl border border-fg/10 bg-panel/60 p-6 md:p-8"
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Location · {t.where}</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg/40">Location · {t.where}</div>
             <p className="mt-4 font-display text-2xl leading-snug tracking-tight">{t.summary}</p>
-            <p className="mt-4 leading-relaxed text-white/60">
-              <span className="text-white">Purpose — </span>
+            <p className="mt-4 leading-relaxed text-fg/60">
+              <span className="text-fg">Purpose — </span>
               {t.purpose}
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-white/15 bg-white/[0.03] p-4">
-                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" /> Pass
+              <div className="rounded-xl border border-fg/15 bg-fg/[0.03] p-4">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-fg">
+                  <span className="h-1.5 w-1.5 rounded-full bg-fg" /> Pass
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{t.pass}</p>
+                <p className="mt-2 text-sm leading-relaxed text-fg/60">{t.pass}</p>
               </div>
               <div className="rounded-xl border border-ember-500/30 bg-ember-500/[0.05] p-4">
                 <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ember-400">
                   <span className="h-1.5 w-1.5 rounded-full bg-ember-500" /> Fail
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{t.fail}</p>
+                <p className="mt-2 text-sm leading-relaxed text-fg/60">{t.fail}</p>
               </div>
             </div>
 
             <ul className="mt-6 space-y-2">
               {t.notes.map((n) => (
-                <li key={n} className="flex gap-3 text-sm leading-relaxed text-white/50">
-                  <span className="mt-2 h-px w-3 shrink-0 bg-white/30" />
+                <li key={n} className="flex gap-3 text-sm leading-relaxed text-fg/50">
+                  <span className="mt-2 h-px w-3 shrink-0 bg-fg/30" />
                   {n}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 overflow-x-auto rounded-xl border border-white/10">
+            <div className="mt-8 overflow-x-auto rounded-xl border border-fg/10">
               <table className="w-full min-w-[480px] text-left text-sm">
                 <thead>
-                  <tr className="bg-white/[0.03] font-mono text-[10px] uppercase tracking-[0.15em] text-white/40">
+                  <tr className="bg-fg/[0.03] font-mono text-[10px] uppercase tracking-[0.15em] text-fg/40">
                     {t.table.head.map((h) => (
                       <th key={h} className="px-4 py-3 font-normal">{h}</th>
                     ))}
@@ -303,9 +303,9 @@ export default function PrototypeTesting() {
                 </thead>
                 <tbody>
                   {t.table.rows.map((r) => (
-                    <tr key={r[0]} className="border-t border-white/5 transition-colors hover:bg-white/[0.03]">
+                    <tr key={r[0]} className="border-t border-fg/5 transition-colors hover:bg-fg/[0.03]">
                       {r.map((c, ci) => (
-                        <td key={ci} className={`px-4 py-3 ${ci === 0 ? "text-white" : ci === 1 && r.length === 3 ? "text-ember-400" : "text-white/40"}`}>
+                        <td key={ci} className={`px-4 py-3 ${ci === 0 ? "text-fg" : ci === 1 && r.length === 3 ? "text-ember-400" : "text-fg/40"}`}>
                           {c}
                         </td>
                       ))}
