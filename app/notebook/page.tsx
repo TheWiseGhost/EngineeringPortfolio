@@ -1,60 +1,49 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { DocViewer } from "@/components/DocPage";
+import { Arrow, EASE, Eyebrow, SplitHeading } from "@/components/ui";
+import { NOTEBOOK_URL } from "@/lib/elements";
+
+const NOTEBOOK_ID = "1PhXF3W-L3znEa1InXp31giSMZiSlV1BV2Kv9CXxpEMk";
 
 export default function Notebook() {
-  const handleOpenNotebook = () => {
-    window.open(
-      "https://docs.google.com/document/d/1PhXF3W-L3znEa1InXp31giSMZiSlV1BV2Kv9CXxpEMk/edit?tab=t.bwog6cnzcjxc",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-16">
-      <div className="max-w-2xl w-full text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <div className="relative px-6 pb-10 pt-32 md:pt-40">
+      <div className="mx-auto max-w-6xl">
+        <Eyebrow index="↳">Development log</Eyebrow>
+        <div className="mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <h1 className="max-w-3xl font-display text-[clamp(2.6rem,7vw,5.6rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
+            <SplitHeading text="Engineering" delay={0.05} />
+            <br />
+            <SplitHeading text="notebook." delay={0.15} className="text-white/40" />
+          </h1>
+          <motion.a
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, ease: EASE }}
+            href={NOTEBOOK_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 self-start rounded-xl bg-ember-500 px-5 py-3 text-sm font-medium text-black transition-all hover:bg-ember-400 hover:shadow-[0_0_40px_-8px_#ff6b1a] md:self-auto"
+          >
+            Open full notebook
+            <Arrow className="h-4 w-4 transition-transform group-hover:rotate-45" />
+          </motion.a>
+        </div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-6 max-w-xl text-lg leading-relaxed text-white/55"
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="font-display text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-          >
-            Engineering Notebook
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl text-gray-300 mb-12"
-          >
-            Access the complete engineering documentation and development log
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.button
-              onClick={handleOpenNotebook}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold text-lg rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              Open Engineering Notebook
-            </motion.button>
-          </motion.div>
-
-        </motion.div>
+          The complete engineering documentation and development log — every iteration, decision and test, as it
+          happened.
+        </motion.p>
+        <div className="mt-14">
+          <DocViewer docId={NOTEBOOK_ID} title="Engineering Notebook" code="NB" />
+        </div>
       </div>
     </div>
   );
 }
-

@@ -2,21 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { elements } from "@/lib/elements";
+import Logo from "./Logo";
 
-const docItems = [
-  { name: "Problem Statement", path: "/problem-statement" },
-  { name: "Patents & Products", path: "/patents-products" },
-  { name: "Solution Requirements", path: "/solution-requirements" },
-  { name: "Design Concepts", path: "/design-concepts" },
-  { name: "STEM & Design Viability", path: "/stem-design-viability" },
-  { name: "Testable Prototype", path: "/testable-prototype" },
-  { name: "Prototype Testing & Data Plan", path: "/prototype-testing" },
-  { name: "Testing & Data Analysis", path: "/testing-data-analysis" },
-];
-
-const mainNavItems = [
+const links = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Notebook", path: "/notebook" },
@@ -24,231 +15,226 @@ const mainNavItems = [
 
 export default function Navigation() {
   const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [docMenuOpen, setDocMenuOpen] = useState(false);
-  const docMenuRef = useRef<HTMLDivElement>(null);
+  const [docsOpen, setDocsOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const docsRef = useRef<HTMLDivElement>(null);
+  const { scrollY, scrollYProgress } = useScroll();
 
-  const isDocPage = docItems.some((item) => pathname === item.path);
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 24));
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (docMenuRef.current && !docMenuRef.current.contains(e.target as Node)) {
-        setDocMenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    setDocsOpen(false);
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => {
+      if (docsRef.current && !docsRef.current.contains(e.target as Node)) setDocsOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && (setDocsOpen(false), setMobileOpen(false));
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
+  const isDoc = elements.some((e) => pathname === `/${e.slug}`);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex-shrink-0"
-          >
-            <Link href="/" className="font-display text-xl font-bold text-white">
-              AMS System
-            </Link>
-          </motion.div>
+    <>
+      <motion.div
+        className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-ember-500"
+        style={{ scaleX: scrollYProgress }}
+      />
+      <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+        <motion.nav
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className={`flex w-full max-w-6xl items-center justify-between rounded-2xl border px-3 py-2 transition-colors duration-300 ${
+            scrolled || docsOpen || mobileOpen
+              ? "border-white/10 bg-ink-900/80 backdrop-blur-xl"
+              : "border-transparent bg-transparent"
+          }`}
+        >
+          <Link href="/" className="group flex items-center gap-2.5 px-2 py-1">
+            <Logo className="h-5 w-auto text-white transition-colors group-hover:text-ember-500" />
+            <span className="font-display text-sm font-semibold tracking-tight">AMS</span>
+            <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 sm:inline">
+              / Mobility System
+            </span>
+          </Link>
 
-          <div className="hidden md:flex items-center space-x-1">
-            <Link
-              href="/"
-              className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                pathname === "/" ? "text-white" : "text-gray-400 hover:text-white"
-              }`}
-            >
+          <div className="hidden items-center gap-1 md:flex">
+            <NavLink href="/" active={pathname === "/"}>
               Home
-              {pathname === "/" && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
-                  initial={false}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                />
-              )}
-            </Link>
-
-            <div className="relative" ref={docMenuRef}>
+            </NavLink>
+            <div className="relative" ref={docsRef}>
               <button
-                onClick={() => setDocMenuOpen(!docMenuOpen)}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 flex items-center gap-1 ${
-                  isDocPage ? "text-white" : "text-gray-400 hover:text-white"
+                onClick={() => setDocsOpen((o) => !o)}
+                aria-expanded={docsOpen}
+                className={`relative flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm transition-colors ${
+                  isDoc || docsOpen ? "text-white" : "text-white/55 hover:text-white"
                 }`}
               >
                 Documentation
                 <svg
-                  className={`w-4 h-4 transition-transform ${docMenuOpen ? "rotate-180" : ""}`}
-                  fill="none"
+                  className={`h-3.5 w-3.5 transition-transform duration-300 ${docsOpen ? "rotate-180" : ""}`}
                   viewBox="0 0 24 24"
+                  fill="none"
                   stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  <path d="M6 9l6 6 6-6" />
                 </svg>
-                {isDocPage && !docMenuOpen && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
+                {isDoc && <ActiveDot />}
               </button>
               <AnimatePresence>
-                {docMenuOpen && (
+                {docsOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 py-2 w-56 bg-black/95 backdrop-blur-md border border-white/10 rounded-lg shadow-xl"
+                    initial={{ opacity: 0, y: -6, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.98 }}
+                    transition={{ duration: 0.18 }}
+                    style={{ x: "-50%" }}
+                    className="absolute left-1/2 top-full mt-3 w-[560px] overflow-hidden rounded-2xl border border-white/10 bg-ink-900 p-2 shadow-2xl shadow-black/80"
                   >
-                    {docItems.map((item) => (
-                      <Link
-                        key={item.path}
-                        href={item.path}
-                        onClick={() => setDocMenuOpen(false)}
-                        className={`block px-4 py-2 text-sm font-medium transition-colors ${
-                          pathname === item.path
-                            ? "text-white bg-white/10"
-                            : "text-gray-400 hover:text-white hover:bg-white/5"
-                        }`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    <div className="flex items-center justify-between px-3 pb-2 pt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                      <span>Engineering Design Process</span>
+                      <span className="text-ember-500">08 Elements</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1">
+                      {elements.map((el) => {
+                        const active = pathname === `/${el.slug}`;
+                        return (
+                          <Link
+                            key={el.slug}
+                            href={`/${el.slug}`}
+                            className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors ${
+                              active ? "bg-ember-500/10" : "hover:bg-white/[0.04]"
+                            }`}
+                          >
+                            <span
+                              className={`font-mono text-xs ${
+                                active ? "text-ember-500" : "text-white/30 group-hover:text-ember-500"
+                              } transition-colors`}
+                            >
+                              {el.code}
+                            </span>
+                            <span className={`text-sm ${active ? "text-white" : "text-white/70 group-hover:text-white"}`}>
+                              {el.short}
+                            </span>
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
-            {mainNavItems.slice(1).map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                    isActive ? "text-white" : "text-gray-400 hover:text-white"
-                  }`}
-                >
-                  {item.name}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"
-                      initial={false}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
+            {links.slice(1).map((l) => (
+              <NavLink key={l.path} href={l.path} active={pathname === l.path}>
+                {l.name}
+              </NavLink>
+            ))}
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-400 hover:text-white transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
+          <Link
+            href="/notebook"
+            className="hidden items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-ember-500 md:flex"
+          >
+            Open Notebook
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
+              <path d="M7 17L17 7M9 7h8v8" />
+            </svg>
+          </Link>
 
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="py-4 space-y-2">
-                <Link
-                  href="/"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2 text-base font-medium rounded-lg transition-colors ${
-                    pathname === "/" ? "text-white bg-white/10" : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  Home
-                </Link>
-                <div className="px-4 py-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Documentation</div>
-                {docItems.map((item) => (
+          <button
+            className="rounded-lg p-2 text-white/70 hover:text-white md:hidden"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            <div className="relative h-4 w-5">
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 bg-current transition-all ${mobileOpen ? "top-2 rotate-45" : "top-0.5"}`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 bg-current transition-all ${mobileOpen ? "top-2 -rotate-45" : "top-3"}`}
+              />
+            </div>
+          </button>
+        </motion.nav>
+      </header>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 overflow-y-auto bg-ink-950/95 px-6 pb-10 pt-24 backdrop-blur-xl md:hidden"
+          >
+            <div className="space-y-1">
+              {links.map((l, i) => (
+                <motion.div key={l.path} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
                   <Link
-                    key={item.path}
-                    href={item.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`block px-6 py-2 text-base font-medium rounded-lg transition-colors ${
-                      pathname === item.path
-                        ? "text-white bg-white/10"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
+                    href={l.path}
+                    className={`block py-2 font-display text-3xl font-medium ${pathname === l.path ? "text-ember-500" : "text-white"}`}
                   >
-                    {item.name}
+                    {l.name}
                   </Link>
-                ))}
-                <Link
-                  href="/about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2 text-base font-medium rounded-lg transition-colors ${
-                    pathname === "/about" ? "text-white bg-white/10" : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
+                </motion.div>
+              ))}
+            </div>
+            <div className="mt-8 border-t border-white/10 pt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+              Documentation
+            </div>
+            <div className="mt-3 space-y-1">
+              {elements.map((el, i) => (
+                <motion.div
+                  key={el.slug}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + i * 0.03 }}
                 >
-                  About
-                </Link>
-                <Link
-                  href="/notebook"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-2 text-base font-medium rounded-lg transition-colors ${
-                    pathname === "/notebook" ? "text-white bg-white/10" : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  Engineering Notebook
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+                  <Link href={`/${el.slug}`} className="flex items-baseline gap-3 py-2">
+                    <span className="font-mono text-xs text-ember-500">{el.code}</span>
+                    <span className={pathname === `/${el.slug}` ? "text-white" : "text-white/70"}>{el.short}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
+function NavLink({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className={`relative rounded-lg px-3.5 py-2 text-sm transition-colors ${
+        active ? "text-white" : "text-white/55 hover:text-white"
+      }`}
+    >
+      {children}
+      {active && <ActiveDot />}
+    </Link>
+  );
+}
+
+function ActiveDot() {
+  return (
+    <motion.span
+      layoutId="nav-dot"
+      className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-ember-500"
+      transition={{ type: "spring", stiffness: 500, damping: 35 }}
+    />
+  );
+}

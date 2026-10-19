@@ -1,255 +1,322 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import DocPage from "@/components/DocPage";
+import { Reveal } from "@/components/ui";
 
-const sectionProps = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8 },
-  className: "bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 mb-8",
+const specs = [
+  {
+    t: "Obstacle & Hazard Detection",
+    items: [
+      ["Obstacle detection", "Detect at least 4 m ahead; obstacles of all heights; non-contact detection."],
+      ["Drop-off warning", "Stairs, steep drops, manholes. Alerts for a drop of 15+ cm at least 1 m before the obstacle."],
+    ],
+  },
+  {
+    t: "Environmental Reliability",
+    items: [["All conditions", "High accuracy in rain, light snow, fog, bright sunlight, low light and indoors. Consistent across environments."]],
+  },
+  {
+    t: "User Feedback & Interface",
+    items: [
+      ["Haptic feedback", "Vibration-based alerts for obstacles and hazards; discreet, non-audio communication."],
+      ["Low battery warning", "Notifies the user before critical level, with enough time to recharge safely."],
+    ],
+  },
+  {
+    t: "Safety & Emergency",
+    items: [
+      ["Fall detection", "Detects sudden impacts or abnormal motion; triggers emergency protocols."],
+      ["Emergency contacts", "Alerts pre-set contacts and shares location during emergencies."],
+    ],
+  },
+  {
+    t: "Regulatory Compliance",
+    items: [["Standards", "Meets medical and assistive device safety standards; electrical and wireless regulations."]],
+  },
+  {
+    t: "Ergonomics & Physical Design",
+    items: [
+      ["Weight & balance", "Lightweight for long-term comfort; evenly distributed to reduce strain."],
+      ["Materials & durability", "Impact-resistant; withstands daily wear and minor drops."],
+      ["Water & dust", "Protected against light rain and dust; indoor and outdoor use."],
+    ],
+  },
+  {
+    t: "Connectivity & Intelligence",
+    items: [
+      ["GPS & navigation", "Real-time location tracking; turn-by-turn navigation."],
+      ["AI landmark recognition", "Identifies important buildings or locations; contextual audio feedback."],
+      ["Accessible charging", "Easy-to-locate port or magnetic connector."],
+    ],
+  },
+];
+
+const deferred = [
+  ["Fall Detection", "Requires advanced motion sensors and impact calibration not yet integrated; proper testing needs controlled fall simulations."],
+  ["Emergency Contact Notification", "Depends on smartphone connectivity, network access and software integration; prototype focused on hardware-based detection."],
+  ["Regulatory Compliance", "Verification occurs after final design; prototype stage focuses on functional performance."],
+  ["Weight & Balance", "Prototype does not represent final materials or component layout; ergonomic testing planned for refined design."],
+  ["Materials & Durability", "Prototype uses temporary materials; stress/drop/wear testing in later production stages."],
+  ["Water & Dust Resistance", "Prototype not sealed to final standards; resistance testing on finalized housing."],
+  ["GPS & Navigation Integration", "Requires full GPS modules and software; current phase focused on core obstacle detection."],
+  ["AI Landmark Recognition", "Depends on advanced AI and camera processing planned for future development."],
+  ["Accessible Charging Interface", "Charging design optimized during final refinement; secondary to validating safety."],
+];
+
+type Test = {
+  name: string;
+  where: string;
+  summary: string;
+  purpose: string;
+  pass: string;
+  fail: string;
+  notes: string[];
+  table: { head: string[]; rows: string[][] };
 };
 
+const tests: Test[] = [
+  {
+    name: "Environmental Reliability",
+    where: "Team member's house",
+    summary: "Maintain high detection accuracy (>98%) in various environments.",
+    purpose: "Verify that the system maintains accurate and reliable object detection across different real-world environmental conditions.",
+    pass: "Test subject reliably navigates under different conditions (cameras/sensors restricted) without hitting obstacles. Obstacles avoided >98% of the time.",
+    fail: "Subject cannot reliably navigate; obstacles avoided <98% of the time.",
+    notes: [
+      "Accuracy = (TP + TN) / (TP + TN + FP + FN). TP = correct obstacle ID; FP = ghost detection; FN = missed obstacle.",
+      "Environmental factors (e.g. rain) tested with standard procedures — constant spray 5 L/min, 45° nozzle.",
+      "Materials: visual impairment glasses, chairs, lights, tape, indoor environments, stairs.",
+      "Termination: if the test taker becomes very disoriented, motion sick, or experiences eye/frame discomfort.",
+    ],
+    table: {
+      head: ["Environment", "Detection / Recognition / Response / Feedback"],
+      rows: [["Clear", "—"], ["Rain", "—"], ["Fog", "—"], ["Bright", "—"], ["Dark", "—"], ["Crit. battery (5%)", "—"]],
+    },
+  },
+  {
+    name: "Obstacle Detection",
+    where: "Team member's house",
+    summary: "Maintain high detection accuracy (>98%) for different obstacle types (curbs to overhanging).",
+    purpose: "Verify that the system detects and classifies the correct type of obstacle.",
+    pass: "System correctly identifies obstacle and user is alerted; correct identification ≥98% of the time.",
+    fail: "Incorrect classification or no identification; obstacles avoided <98% of the time.",
+    notes: [
+      "Materials: visual impairment glasses, chairs, hanging lights, mid–large objects.",
+      "Termination: if the procedure becomes too dangerous (disorientation, motion sickness, eye/frame discomfort).",
+    ],
+    table: {
+      head: ["Obstacle", "Haptic pattern", "Recognition / Response / Notes"],
+      rows: [
+        ["Overhanging", "Spike pulse", "—"],
+        ["Steep drop-offs", "Continuous buzz", "—"],
+        ["Ledges", "Escalating pulse", "—"],
+        ["Ground obstacles", "Rapid repeating pulse", "—"],
+        ["Surface (swamp/mud/water)", "Slow, strong, repeating", "—"],
+        ["Surface (uneven ground)", "Slow, strong, repeating", "—"],
+      ],
+    },
+  },
+  {
+    name: "User Feedback & Interface",
+    where: "Team lab / indoor environment",
+    summary: "100% user recognition of haptic alerts; battery warnings with at least 5 minutes lead time before shutdown.",
+    purpose: "Verify that haptic feedback communicates spatial information effectively and that low-battery alerts are clear and timely without causing alarm or confusion.",
+    pass: "User identifies direction/intensity of haptic feedback 100% of the time. Low battery warnings fire at thresholds (15%, 5%) and are perceived.",
+    fail: "User misses a haptic cue or misinterprets direction. System shuts down without a distinct warning, or the warning is too subtle during use.",
+    notes: [
+      "Materials: prototype glasses with haptic motors, mobile dashboard/testing app, variable power supply, blindfold, stopwatch.",
+      "Initial conditions: glasses fully charged and connected; quiet environment so the user focuses on tactile cues.",
+      "Procedure: calibrate vibration to “clear but comfortable” → blind directional test → simulate 20%→0% battery → haptic-only test walk.",
+      "Termination: significant discomfort (tingling, numbness), frames noticeably hot, or motors fail to actuate consistently.",
+    ],
+    table: {
+      head: ["Alert type", "Haptic pattern", "Recognition / Response / Notes"],
+      rows: [
+        ["Left obstacle", "Single pulse (left)", "—"],
+        ["Right obstacle", "Single pulse (right)", "—"],
+        ["Center obstacle", "Sync pulse (both)", "—"],
+        ["Critical proximity", "Rapid staccato pulsing", "—"],
+        ["Low battery (15%)", "Double long pulse", "—"],
+        ["Crit. battery (5%)", "Continuous short pulse", "—"],
+      ],
+    },
+  },
+];
+
 export default function PrototypeTesting() {
+  const [tab, setTab] = useState(0);
+  const [showDeferred, setShowDeferred] = useState(false);
+  const t = tests[tab];
+
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <DocPage
+      slug="prototype-testing"
+      overview={
+        <p>
+          Visually impaired people face a high risk of serious injury from falls, largely because current aids don&apos;t
+          reliably warn about steep drop-offs or overhanging obstacles. This plan defines the design specifications for
+          the visual aid glasses — ordered most to least important — and the testing criteria used to validate the
+          prototype.
+        </p>
+      }
+    >
+      {/* Specifications */}
+      <section>
+        <Reveal>
+          <div className="flex items-end justify-between">
+            <h2 className="font-display text-3xl font-semibold tracking-tight">Design specifications</h2>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30">Priority ↓</span>
+          </div>
+        </Reveal>
+        <div className="mt-6 grid gap-3 md:grid-cols-2">
+          {specs.map((s, i) => (
+            <Reveal key={s.t} delay={(i % 2) * 0.06}>
+              <div className="h-full rounded-2xl border border-white/10 bg-ink-900/60 p-5 transition-colors hover:border-white/25">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-ember-500">P{i + 1}</span>
+                  <h3 className="font-medium text-white">{s.t}</h3>
+                </div>
+                <dl className="mt-4 space-y-3">
+                  {s.items.map(([k, v]) => (
+                    <div key={k}>
+                      <dt className="text-sm text-white/80">{k}</dt>
+                      <dd className="text-sm leading-relaxed text-white/45">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setShowDeferred((s) => !s)}
+          className="mt-4 flex w-full items-center justify-between rounded-2xl border border-dashed border-white/15 px-5 py-4 text-left transition-colors hover:border-white/30"
+          aria-expanded={showDeferred}
         >
-          <h1 className="font-display text-4xl sm:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Prototype Testing and Data Collection Plan
-          </h1>
-
-          <motion.div {...sectionProps}>
-            <h2 className="font-display text-2xl font-semibold mb-4 text-white">
-              I. Introduction
-            </h2>
-            <p className="text-gray-300 leading-relaxed mb-4">
-              Visually impaired people face a high risk of serious injury from falls during daily mobility in various indoor and outdoor environments. This is primarily because current aids, like canes, don&apos;t reliably detect or warn users about steep drop-offs or overhanging obstacles. With 46.7% of visually impaired individuals reporting a fall each year, leading to injury and loss of independence, a more reliable solution is urgently needed to ensure their safety and mobility.
-            </p>
-          </motion.div>
-
-          <motion.div {...sectionProps}>
-            <h2 className="font-display text-2xl font-semibold mb-4 text-white">
-              II. Design Specifications
-            </h2>
-            <p className="text-gray-400 leading-relaxed mb-6">
-              These are the current design specifications for the visual aid glasses. Some specifications may have been changed from earlier due to further research. All criteria will be tested during the testing phase; the list is ordered from most to least important. Some previous specifications have been omitted or combined to keep the list compact and direct.
-            </p>
-
-            <div className="space-y-6 text-gray-300">
-              <div>
-                <h3 className="font-semibold text-white mb-2">Obstacle & Hazard Detection</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-400">
-                  <li><strong className="text-gray-300">Obstacle Detection:</strong> Detect at least 4 meters ahead; detect obstacles of all heights; provides non-contact detection.</li>
-                  <li><strong className="text-gray-300">Drop-off warning:</strong> Detects stairs, steep drops, manholes, etc. Detects and alerts for a drop of 15+ cm, at least 1 meter before the obstacle.</li>
-                </ul>
+          <span>
+            <span className="font-medium">Specifications not tested in this phase</span>
+            <span className="ml-3 font-mono text-xs text-white/40">{deferred.length} items</span>
+          </span>
+          <span className={`text-ember-500 transition-transform ${showDeferred ? "rotate-45" : ""}`}>+</span>
+        </button>
+        <AnimatePresence initial={false}>
+          {showDeferred && (
+            <motion.ul
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="grid gap-x-8 gap-y-4 px-5 pt-5 md:grid-cols-2">
+                {deferred.map(([k, v]) => (
+                  <li key={k} className="text-sm">
+                    <div className="text-white/80">{k}</div>
+                    <div className="leading-relaxed text-white/45">{v}</div>
+                  </li>
+                ))}
               </div>
+            </motion.ul>
+          )}
+        </AnimatePresence>
+      </section>
 
-              <div>
-                <h3 className="font-semibold text-white mb-2">Environmental Reliability</h3>
-                <p className="text-gray-400">Maintains high accuracy of detection in rain, light snow, fog, bright sunlight, low light, and indoor environments. Consistent across different environments.</p>
-              </div>
+      {/* Tests */}
+      <section>
+        <Reveal>
+          <h2 className="font-display text-3xl font-semibold tracking-tight">Testing criteria</h2>
+          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40">
+            Shrihit Bhattiprolu · Aditya Byju · Anirudh Tarur · March 5–6, 2026
+          </p>
+        </Reveal>
 
-              <div>
-                <h3 className="font-semibold text-white mb-2">User Feedback & Interface</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-400">
-                  <li><strong className="text-gray-300">Haptic Feedback System:</strong> Vibration-based alerts for obstacles and hazards; discreet, non-audio communication.</li>
-                  <li><strong className="text-gray-300">Low Battery Warning:</strong> Notifies the user before critical level; ensures enough time to recharge safely.</li>
-                </ul>
-              </div>
+        <div className="mt-6 flex gap-1 overflow-x-auto rounded-2xl border border-white/10 bg-ink-900/60 p-1">
+          {tests.map((x, i) => (
+            <button
+              key={x.name}
+              onClick={() => setTab(i)}
+              className={`relative flex-1 whitespace-nowrap rounded-xl px-4 py-3 text-left text-sm transition-colors ${
+                tab === i ? "text-black" : "text-white/60 hover:text-white"
+              }`}
+            >
+              {tab === i && (
+                <motion.span layoutId="test-tab" className="absolute inset-0 rounded-xl bg-white" transition={{ type: "spring", stiffness: 400, damping: 35 }} />
+              )}
+              <span className="relative">
+                <span className={`mr-2 font-mono text-xs ${tab === i ? "text-ember-600" : "text-white/30"}`}>T{i + 1}</span>
+                {x.name}
+              </span>
+            </button>
+          ))}
+        </div>
 
-              <div>
-                <h3 className="font-semibold text-white mb-2">Safety & Emergency Systems</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-400">
-                  <li>Fall detection: detects sudden impacts or abnormal motion; automatically triggers emergency protocols if needed.</li>
-                  <li>Emergency contact notification: sends alerts to pre-set contacts; shares location data during emergencies.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-white mb-2">Regulatory Compliance</h3>
-                <p className="text-gray-400">Meets medical and assistive device safety standards. Complies with electrical and wireless communication regulations.</p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-white mb-2">Ergonomics & Physical Design</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-400">
-                  <li><strong className="text-gray-300">Weight & Balance:</strong> Lightweight for long-term comfort; evenly distributed weight to reduce strain.</li>
-                  <li><strong className="text-gray-300">Materials & Durability:</strong> Strong, impact-resistant materials; withstands daily wear and minor drops.</li>
-                  <li><strong className="text-gray-300">Water & Dust Resistance:</strong> Protected against light rain and dust; suitable for outdoor and indoor use.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-white mb-2">Connectivity & Intelligent Features</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-400">
-                  <li><strong className="text-gray-300">GPS & Navigation Integration:</strong> Real-time location tracking; turn-by-turn navigation.</li>
-                  <li><strong className="text-gray-300">AI Landmark Recognition:</strong> Identifies important buildings or locations; contextual audio feedback.</li>
-                  <li><strong className="text-gray-300">Accessible Charging Interface:</strong> Easy-to-locate charging port or magnetic connector; simple, user-friendly charging.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <h3 className="font-semibold text-white mb-3">Specifications Not Tested in This Phase</h3>
-              <p className="text-gray-400 text-sm mb-4">The following were not tested in the current prototype phase for the reasons noted:</p>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><strong className="text-gray-300">Fall Detection:</strong> Requires advanced motion sensors and impact calibration not yet integrated; proper testing would need controlled fall simulations.</li>
-                <li><strong className="text-gray-300">Emergency Contact Notification:</strong> Depends on smartphone connectivity, network access, and software integration; prototype focused on hardware-based detection.</li>
-                <li><strong className="text-gray-300">Regulatory Compliance:</strong> Verification occurs after final design; prototype stage focuses on functional performance.</li>
-                <li><strong className="text-gray-300">Weight & Balance:</strong> Prototype does not represent final materials or component layout; ergonomic testing planned for refined design.</li>
-                <li><strong className="text-gray-300">Materials & Durability:</strong> Prototype uses temporary materials for functionality testing; stress/drop/wear testing in later production stages.</li>
-                <li><strong className="text-gray-300">Water & Dust Resistance:</strong> Prototype not sealed to final standards; environmental resistance testing on finalized housing.</li>
-                <li><strong className="text-gray-300">GPS & Navigation Integration:</strong> Requires full GPS modules and software; current phase focused on core obstacle detection.</li>
-                <li><strong className="text-gray-300">AI Landmark Recognition:</strong> Depends on advanced AI and camera processing planned for future development; prototype prioritized basic hazard detection.</li>
-                <li><strong className="text-gray-300">Accessible Charging Interface:</strong> Charging design optimization during final product refinement; secondary to validating safety performance.</li>
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div {...sectionProps}>
-            <h2 className="font-display text-2xl font-semibold mb-6 text-white">
-              III. Testing Criteria
-            </h2>
-
-            <div className="space-y-10">
-              <div className="pb-8 border-b border-white/10 last:border-0 last:pb-0">
-                <h3 className="text-xl font-semibold text-white mb-2">Test #1: Environmental Reliability</h3>
-                <p className="text-gray-500 text-sm mb-4">Shrihit Bhattiprolu, Aditya Byju, Anirudh Tarur · March 5–6, 2026 · Team member&apos;s house</p>
-                <p className="text-gray-400 text-sm mb-4"><strong className="text-gray-300">Incremental summary:</strong> Maintain high detection accuracy (&gt;98%) in various environments.</p>
-                <p className="text-gray-300 mb-4"><strong className="text-white">Purpose:</strong> Verify that the system maintains accurate and reliable object detection across different real-world environmental conditions.</p>
-                <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Pass</p>
-                    <p className="text-gray-400 text-sm">Test subject reliably navigates under different conditions (cameras/sensors restricted) without hitting obstacles. Obstacles avoided &gt;98% of the time.</p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Fail</p>
-                    <p className="text-gray-400 text-sm">Subject cannot reliably navigate; obstacles avoided &lt;98% of the time.</p>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-sm mb-2">Accuracy = (TP + TN) / (TP + TN + FP + FN). TP = correct obstacle ID; FP = ghost detection; FN = missed obstacle.</p>
-                <p className="text-gray-400 text-sm mb-4">Environmental factors (e.g., rain) tested with standard procedures (e.g., constant spray 5 L/min, 45° nozzle).</p>
-                <p className="text-gray-400 text-sm"><strong className="text-gray-300">Materials:</strong> Visual impairment glasses, chairs, lights, tape, indoor environments, stairs. <strong className="text-gray-300">Termination:</strong> If test taker becomes very disoriented, motion sick, or experiences eye/frame discomfort.</p>
-                <div className="mt-4 overflow-x-auto">
-                  <table className="w-full text-sm text-left">
-                    <thead><tr className="text-gray-400 border-b border-white/10"><th className="py-2 pr-4">Environment</th><th className="py-2">Detection / Recognition / Response / Feedback</th></tr></thead>
-                    <tbody className="text-gray-400">
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Clear</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Rain</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Fog</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Bright</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Dark</td><td className="py-2">—</td></tr>
-                      <tr><td className="py-2 pr-4">Crit. Battery (5%)</td><td className="py-2">—</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="pb-8 border-b border-white/10 last:border-0 last:pb-0">
-                <h3 className="text-xl font-semibold text-white mb-2">Test #2: Obstacle Detection</h3>
-                <p className="text-gray-500 text-sm mb-4">Shrihit Bhattiprolu, Aditya Byju, Anirudh Tarur · March 5–6, 2026 · Team member&apos;s house</p>
-                <p className="text-gray-400 text-sm mb-4"><strong className="text-gray-300">Incremental summary:</strong> Maintain high detection accuracy (&gt;98%) for different obstacle types (curbs to overhanging).</p>
-                <p className="text-gray-300 mb-4"><strong className="text-white">Purpose:</strong> Verify that the system detects and classifies the correct type of obstacle.</p>
-                <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Pass</p>
-                    <p className="text-gray-400 text-sm">System correctly identifies obstacle and user is alerted; correct identification ≥98% of the time.</p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Fail</p>
-                    <p className="text-gray-400 text-sm">Incorrect classification or no identification; obstacles avoided &lt;98% of the time.</p>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-sm mb-4"><strong className="text-gray-300">Materials:</strong> Visual impairment glasses, chairs, hanging lights, mid–large objects. <strong className="text-gray-300">Termination:</strong> If procedure becomes too dangerous (disorientation, motion sickness, eye/frame discomfort).</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left">
-                    <thead><tr className="text-gray-400 border-b border-white/10"><th className="py-2 pr-4">Obstacle</th><th className="py-2">Haptic Pattern</th><th className="py-2">Recognition / Response / Notes</th></tr></thead>
-                    <tbody className="text-gray-400">
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Overhanging</td><td className="py-2">Spike pulse</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Steep drop-offs</td><td className="py-2">Continuous buzz</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Ledges</td><td className="py-2">Escalating pulse</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Ground obstacles</td><td className="py-2">Rapid repeating pulse</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Surface (swamp/mud/water)</td><td className="py-2">Slow, strong, repeating</td><td className="py-2">—</td></tr>
-                      <tr><td className="py-2 pr-4">Surface (uneven ground)</td><td className="py-2">Slow, strong, repeating</td><td className="py-2">—</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-semibold text-white mb-2">Test #3: User Feedback & Interface</h3>
-                <p className="text-gray-500 text-sm mb-4">Shrihit Bhattiprolu, Aditya Byju, Anirudh Tarur · March 5–6, 2026 · Team lab / indoor environment</p>
-                <p className="text-gray-400 text-sm mb-4"><strong className="text-gray-300">Incremental summary:</strong> 100% user recognition of haptic alerts; battery warnings with at least 5 minutes lead time before shutdown.</p>
-                <p className="text-gray-300 mb-4"><strong className="text-white">Purpose:</strong> Verify that haptic feedback effectively communicates spatial information and that low-battery alerts are clear and timely without causing alarm or confusion.</p>
-                <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Pass</p>
-                    <p className="text-gray-400 text-sm">User correctly identifies direction/intensity of haptic feedback 100% of the time. Low battery warnings at designated thresholds (e.g., 15%, 5%) and successfully perceived.</p>
-                  </div>
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs font-medium text-gray-500 uppercase mb-1">Fail</p>
-                    <p className="text-gray-400 text-sm">User misses a haptic cue or misinterprets direction. System shuts down without distinct low-battery warning or warning too subtle during active use.</p>
-                  </div>
-                </div>
-                <p className="text-gray-400 text-sm mb-2"><strong className="text-gray-300">Materials:</strong> Prototype smart glasses with haptic motors, mobile dashboard/testing app, variable power supply (simulate battery drain), blindfold, stopwatch.</p>
-                <p className="text-gray-400 text-sm mb-2"><strong className="text-gray-300">Initial conditions:</strong> Glasses fully charged and connected; quiet environment so user focuses on tactile/haptic cues.</p>
-                <p className="text-gray-400 text-sm mb-4"><strong className="text-gray-300">Termination:</strong> If user experiences significant discomfort (tingling, numbness), frames become noticeably hot, or haptic motors fail to actuate consistently. Calibration: adjust vibration intensity to &quot;clear but comfortable&quot; threshold. Blind haptic test: blindfolded random directional pulses; record directional ID accuracy. Threshold test: simulate 20%→0% battery; record when warnings trigger. Test walk: navigate clear path using only haptic cues.</p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-left">
-                    <thead><tr className="text-gray-400 border-b border-white/10"><th className="py-2 pr-4">Alert Type</th><th className="py-2">Haptic Pattern</th><th className="py-2">Recognition / Response / Notes</th></tr></thead>
-                    <tbody className="text-gray-400">
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Left obstacle</td><td className="py-2">Single pulse (left)</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Right obstacle</td><td className="py-2">Single pulse (right)</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Center obstacle</td><td className="py-2">Sync pulse (both)</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Critical proximity</td><td className="py-2">Rapid staccato pulsing</td><td className="py-2">—</td></tr>
-                      <tr className="border-b border-white/5"><td className="py-2 pr-4">Low battery (15%)</td><td className="py-2">Double long pulse</td><td className="py-2">—</td></tr>
-                      <tr><td className="py-2 pr-4">Crit. battery (5%)</td><td className="py-2">Continuous short pulse</td><td className="py-2">—</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            key={tab}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="mt-4 rounded-2xl border border-white/10 bg-ink-900/60 p-6 md:p-8"
           >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-2xl font-semibold text-white">
-                Full Documentation
-              </h2>
-              <motion.a
-                href="https://docs.google.com/document/d/1Arlxrer9aI46gt4N5sbCe4p3lED62NHsA6ZTa472fq0/edit?tab=t.0"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors duration-200 text-sm font-medium"
-              >
-                <span>Open in new tab</span>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </motion.a>
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Location · {t.where}</div>
+            <p className="mt-4 font-display text-2xl leading-snug tracking-tight">{t.summary}</p>
+            <p className="mt-4 leading-relaxed text-white/60">
+              <span className="text-white">Purpose — </span>
+              {t.purpose}
+            </p>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-white/15 bg-white/[0.03] p-4">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white" /> Pass
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{t.pass}</p>
+              </div>
+              <div className="rounded-xl border border-ember-500/30 bg-ember-500/[0.05] p-4">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-ember-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-ember-500" /> Fail
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{t.fail}</p>
+              </div>
             </div>
-            <div className="aspect-video w-full rounded-lg overflow-hidden border border-white/10">
-              <iframe
-                src="https://docs.google.com/document/d/1Arlxrer9aI46gt4N5sbCe4p3lED62NHsA6ZTa472fq0/preview"
-                className="w-full h-full"
-                title="Prototype Testing and Data Collection Plan"
-                allow="fullscreen"
-              />
+
+            <ul className="mt-6 space-y-2">
+              {t.notes.map((n) => (
+                <li key={n} className="flex gap-3 text-sm leading-relaxed text-white/50">
+                  <span className="mt-2 h-px w-3 shrink-0 bg-white/30" />
+                  {n}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-8 overflow-x-auto rounded-xl border border-white/10">
+              <table className="w-full min-w-[480px] text-left text-sm">
+                <thead>
+                  <tr className="bg-white/[0.03] font-mono text-[10px] uppercase tracking-[0.15em] text-white/40">
+                    {t.table.head.map((h) => (
+                      <th key={h} className="px-4 py-3 font-normal">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {t.table.rows.map((r) => (
+                    <tr key={r[0]} className="border-t border-white/5 transition-colors hover:bg-white/[0.03]">
+                      {r.map((c, ci) => (
+                        <td key={ci} className={`px-4 py-3 ${ci === 0 ? "text-white" : ci === 1 && r.length === 3 ? "text-ember-400" : "text-white/40"}`}>
+                          {c}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </motion.div>
-        </motion.div>
-      </div>
-    </div>
+        </AnimatePresence>
+      </section>
+    </DocPage>
   );
 }

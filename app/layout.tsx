@@ -1,49 +1,33 @@
 import type { Metadata } from "next";
-import { Inter, DM_Sans } from "next/font/google";
-import { JetBrains_Mono } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import BackgroundAnimation from "@/components/BackgroundAnimation";
+import Backdrop from "@/components/Backdrop";
+import Footer from "@/components/Footer";
 
-const inter = Inter({
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
+const grotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-display",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  display: "swap",
-  weight: ["400", "500", "700"],
-});
-
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Advanced Multi-Sensing Mobility System",
-  description: "Smart Glasses for the Visually Impaired - Engineering Portfolio",
+  title: "AMS — Advanced Multi-Sensing Mobility System",
+  description: "Smart Glasses for the Visually Impaired — Engineering Portfolio",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${inter.variable} ${dmSans.variable} ${jetBrainsMono.variable} antialiased`}
-      >
-        <BackgroundAnimation />
+    <html lang="en">
+      <body className={`${inter.variable} ${grotesk.variable} ${mono.variable} antialiased`}>
+        <Backdrop />
         <Navigation />
         <main className="relative z-10">{children}</main>
+        <Footer />
       </body>
     </html>
   );
 }
-
